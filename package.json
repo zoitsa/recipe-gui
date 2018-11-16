@@ -1,7 +1,10 @@
 {
   "name": "recipe-gui",
   "nativescript": {
-    "id": "org.nativescript.recipegui"
+    "id": "org.nativescript.recipegui",
+    "tns-ios": {
+      "version": "5.0.0"
+    }
   },
   "version": "0.0.0",
   "scripts": {
