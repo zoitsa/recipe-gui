@@ -10,7 +10,7 @@ import { CategoryActions } from '../actions/categories.actions';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  title = 'recipe-gui';
+  title = 'Recipes';
 
   constructor(
     private store: Store<fromRoot.State>,

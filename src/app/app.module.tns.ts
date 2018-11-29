@@ -1,10 +1,18 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
-import { NativeScriptHttpModule } from 'nativescript-angular/http';
+import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+
+import { StoreModule, ActionsSubject } from '@ngrx/store';
+import { CMSActionsSubject } from './services/dispatcher.service';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { CategoryEffects } from './effects/category.effects';
 
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
@@ -20,10 +28,15 @@ import { HomeComponent } from './home/home.component';
   ],
   imports: [
     NativeScriptModule,
-    NativeScriptHttpModule,
+    NativeScriptHttpClientModule,
     AppRoutingModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([CategoryEffects]),
   ],
-  providers: [],
+  providers: [
+    { provide: ActionsSubject, useClass: CMSActionsSubject },
+  ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })
