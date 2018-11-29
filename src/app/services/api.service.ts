@@ -11,5 +11,11 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  getAll() {
+    return this.http.get(`${this.apiURL}/category`, {
+      // headers: new HttpHeaders().set('Authorization', this.appAuth)
+    });
+  }
+
 
 }
