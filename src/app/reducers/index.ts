@@ -19,5 +19,27 @@ export const reducers: ActionReducerMap<State> = {
   recipes: RecipeReducer.reducer,
 };
 
+export const selectCategoryState = (state: State) => state.categories;
+
+export const selectCategoryEntities = createSelector(
+  selectCategoryState,
+  CategoryReducer.selectCategoryEntities
+);
+
+export const selectAllCategories = createSelector(
+  selectCategoryState,
+  CategoryReducer.selectAllCategories
+);
+
+export const selectCategorySelectedId = createSelector(
+  selectCategoryState,
+  CategoryReducer.selectedId
+);
+
+export const selectSelectedCategory = createSelector(
+  selectCategoryEntities,
+  selectCategorySelectedId,
+  (entities, id) => entities[id]
+);
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];

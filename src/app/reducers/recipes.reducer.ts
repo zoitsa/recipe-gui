@@ -26,12 +26,12 @@ export namespace RecipeReducer {
           loading: true,
         };
 
-      case RecipeActions.Types.GET_COMPLETE:
-        return adapter.addMany(action.payload, {
-          ...state,
-          loading: false,
-          results: action.payload
-        });
+      // case RecipeActions.Types.GET_COMPLETE:
+      //   return adapter.addMany(action.payload, {
+      //     ...state,
+      //     loading: false,
+      //     results: action.payload
+      //   });
 
       default:
         return state;

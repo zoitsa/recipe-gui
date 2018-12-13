@@ -4,7 +4,8 @@ export namespace CategoryActions {
   export enum Types {
     GET = '[category] Get',
     GET_COMPLETE = '[category] GetComplete',
-    GET_ERROR = '[category] GetError'
+    GET_ERROR = '[category] GetError',
+    SELECT = '[category] Select'
   }
 
   export class Get implements Action {
@@ -21,8 +22,14 @@ export namespace CategoryActions {
     constructor(public payload: any) {}
   }
 
+  export class Select implements Action {
+    readonly type: string = Types.SELECT;
+    constructor(public payload: any) {}
+  }
+
   export type Actions
   = Get
   | GetComplete
-  | GetError;
+  | GetError
+  | Select;
 }
