@@ -2,9 +2,9 @@ import { Action } from '@ngrx/store';
 
 export namespace RecipeActions {
   export enum Types {
-    GET = '[category] Get',
-    GET_COMPLETE = '[category] GetComplete',
-    GET_ERROR = '[category] GetError'
+    GET = '[recipe] Get',
+    GET_COMPLETE = '[recipe] GetComplete',
+    GET_ERROR = '[recipe] GetError'
   }
 
   export class Get implements Action {

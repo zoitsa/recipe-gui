@@ -5,6 +5,6 @@
 
 <div *ngIf="subCategories$ | async as categoryTypes">
   <div *ngFor="let subCategory of categoryTypes.subCategories">
-    {{subCategory.name}}
+    <button (click)="getRecipes(subCategory.id)">{{subCategory.name}}</button>
   </div>
 </div>

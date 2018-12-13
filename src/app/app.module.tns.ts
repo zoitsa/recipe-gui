@@ -16,6 +16,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { CategoryEffects } from './effects/category.effects';
+import { RecipeEffects } from './effects/recipes.effects';
 
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
@@ -37,7 +38,7 @@ import { CategoryEffects } from './effects/category.effects';
     AppRoutingModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([CategoryEffects]),
+    EffectsModule.forRoot([CategoryEffects, RecipeEffects]),
   ],
   providers: [
     { provide: ActionsSubject, useClass: CMSActionsSubject },
@@ -46,3 +47,4 @@ import { CategoryEffects } from './effects/category.effects';
   schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
+

@@ -4,6 +4,7 @@ import { Store, select } from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import { CMSActions } from '../services/dispatcher.service';
 import { CategoryActions } from '../actions/categories.actions';
+import { RecipeActions } from '../actions/recipes.actions';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,10 @@ export class HomeComponent implements OnInit {
 
   getCategoryTypes(categoryId) {
     this.store.dispatch(new CategoryActions.Select(categoryId));
+  }
+
+  getRecipes(subCategoryId) {
+    this.store.dispatch(new RecipeActions.Get(subCategoryId));
   }
 
   ngOnInit() {

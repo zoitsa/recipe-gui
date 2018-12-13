@@ -2,14 +2,15 @@ import { Action } from '@ngrx/store';
 
 export namespace CategoryActions {
   export enum Types {
-    GET = '[category] Get',
-    GET_COMPLETE = '[category] GetComplete',
-    GET_ERROR = '[category] GetError',
-    SELECT = '[category] Select'
+    GET = '[recipe] Get',
+    GET_COMPLETE = '[recipe] GetComplete',
+    GET_ERROR = '[recipe] GetError',
+    SELECT = '[recipe] Select'
   }
 
   export class Get implements Action {
     readonly type: string = Types.GET;
+    // constructor(public payload: any) {}
   }
 
   export class GetComplete implements Action {
@@ -31,5 +32,6 @@ export namespace CategoryActions {
   = Get
   | GetComplete
   | GetError
-  | Select;
+  | Select
+  ;
 }

@@ -17,5 +17,10 @@ export class ApiService {
     });
   }
 
+  getRecipesFromSubCategory(subCategoryId: number) {
+    return this.http.get(`${this.apiURL}/subCategory/${subCategoryId}`, {
+    });
+  }
+
 
 }
