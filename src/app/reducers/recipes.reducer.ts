@@ -38,7 +38,7 @@ export namespace RecipeReducer {
         };
 
       case RecipeActions.Types.GET_COMPLETE:
-        return adapter.upsertMany(action.payload.recipes, {
+        return adapter.addMany(action.payload.recipes, {
           ...state,
           loading: false,
         });
@@ -55,4 +55,6 @@ export namespace RecipeReducer {
   } = adapter.getSelectors();
 
   export const loading = (state: State) => state.loading;
+  export const selectedSubCategoryId = (state: State) => state.selectedSubCategoryId;
+  export const selectedRecipeId = (state: State) => state.selectedRecipeId;
 }

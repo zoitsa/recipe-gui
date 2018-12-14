@@ -49,5 +49,5 @@ export namespace CategoryReducer {
   } = adapter.getSelectors();
 
   export const loading = (state: State) => state.loading;
-  export const selectedId = (state: State) => state.selectedCategoryId;
+  export const selectedCategoryId = (state: State) => state.selectedCategoryId;
 }

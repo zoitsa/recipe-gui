@@ -36,7 +36,7 @@ export const selectAllCategories = createSelector(
 
 export const selectCategorySelectedId = createSelector(
   selectCategoryState,
-  CategoryReducer.selectedId
+  CategoryReducer.selectedCategoryId
 );
 
 export const selectSelectedCategory = createSelector(
@@ -45,5 +45,23 @@ export const selectSelectedCategory = createSelector(
   (entities, id) => entities[id]
 );
 
+// ---- Recipe Selectors ----- //
+
+export const selectRecipeState = (state: State) => state.recipes;
+
+export const selectRecipeEntities = createSelector(
+  selectRecipeState,
+  RecipeReducer.selectRecipeEntities
+);
+
+export const selectAllRecipes = createSelector(
+  selectRecipeState,
+  RecipeReducer.selectAllRecipes
+);
+
+export const selectRecipeSelectedId = createSelector(
+  selectRecipeState,
+  RecipeReducer.selectedRecipeId
+);
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];

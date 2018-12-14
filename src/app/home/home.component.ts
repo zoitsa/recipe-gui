@@ -6,6 +6,8 @@ import { CMSActions } from '../services/dispatcher.service';
 import { CategoryActions } from '../actions/categories.actions';
 import { RecipeActions } from '../actions/recipes.actions';
 import { SubCategoryActions } from '../actions/subCategories.actions';
+// import { Observable } from 'tns-core-modules/ui/page/page';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +16,9 @@ import { SubCategoryActions } from '../actions/subCategories.actions';
 })
 export class HomeComponent implements OnInit {
   title = 'Recipes';
-  categories$;
-  subCategories$;
+  categories$: Observable<any>;
+  subCategories$: Observable<any>;
+  recipes$: Observable<any>;
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -23,6 +26,7 @@ export class HomeComponent implements OnInit {
   ) {
     this.categories$ = this.store.select(fromRoot.selectAllCategories);
     this.subCategories$ = this.store.select(fromRoot.selectSelectedCategory);
+    this.recipes$ = this.store.select(fromRoot.selectAllRecipes);
   }
 
   getCategoryTypes(categoryId) {

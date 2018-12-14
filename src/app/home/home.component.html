@@ -12,3 +12,6 @@
 </div>
 
 <h1>Recipes!</h1>
+  <div *ngFor="let recipe of recipes$ | async ">
+    <button>{{recipe.name}}</button>
+  </div>
