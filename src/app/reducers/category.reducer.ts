@@ -5,7 +5,7 @@ import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 export namespace CategoryReducer {
   export interface State extends EntityState<any> {
     loading: boolean;
-    selectedId: number | string;
+    selectedCategoryId: number | string;
   }
 
   export const adapter: EntityAdapter<any> = createEntityAdapter<any>({
@@ -14,7 +14,7 @@ export namespace CategoryReducer {
 
   export const initialState: State = adapter.getInitialState({
     loading: false,
-    selectedId: null,
+    selectedCategoryId: null,
   });
 
   export function reducer(state = initialState, action: CategoryActions.Actions): State {
@@ -34,7 +34,7 @@ export namespace CategoryReducer {
       case CategoryActions.Types.SELECT:
         return {
           ...state,
-          selectedId: action.payload,
+          selectedCategoryId: action.payload,
         };
 
       default:
@@ -49,5 +49,5 @@ export namespace CategoryReducer {
   } = adapter.getSelectors();
 
   export const loading = (state: State) => state.loading;
-  export const selectedId = (state: State) => state.selectedId;
+  export const selectedId = (state: State) => state.selectedCategoryId;
 }

@@ -19,6 +19,9 @@ export const reducers: ActionReducerMap<State> = {
   recipes: RecipeReducer.reducer,
 };
 
+
+// ---- Primary Category Selectors ----- //
+
 export const selectCategoryState = (state: State) => state.categories;
 
 export const selectCategoryEntities = createSelector(
@@ -41,5 +44,6 @@ export const selectSelectedCategory = createSelector(
   selectCategorySelectedId,
   (entities, id) => entities[id]
 );
+
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];

@@ -5,6 +5,7 @@ import * as fromRoot from '../reducers';
 import { CMSActions } from '../services/dispatcher.service';
 import { CategoryActions } from '../actions/categories.actions';
 import { RecipeActions } from '../actions/recipes.actions';
+import { SubCategoryActions } from '../actions/subCategories.actions';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,8 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(new CategoryActions.Select(categoryId));
   }
 
-  getRecipes(subCategoryId) {
+  selectSubCategory(subCategoryId) {
+    this.store.dispatch(new SubCategoryActions.Select(subCategoryId));
     this.store.dispatch(new RecipeActions.Get(subCategoryId));
   }
 
