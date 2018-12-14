@@ -25,17 +25,17 @@ export namespace CategoryReducer {
           loading: true,
         };
 
-      //   case CategoryActions.Types.GET_COMPLETE:
-      //   return adapter.addMany(action.payload, {
-      //     ...state,
-      //     loading: false,
-      //   });
+        case CategoryActions.Types.GET_COMPLETE:
+        return adapter.addMany(action.payload, {
+          ...state,
+          loading: false,
+        });
 
-      // case CategoryActions.Types.SELECT:
-      //   return {
-      //     ...state,
-      //     selectedId: action.payload,
-      //   };
+      case CategoryActions.Types.SELECT:
+        return {
+          ...state,
+          selectedId: action.payload,
+        };
 
       default:
         return state;

@@ -9,9 +9,9 @@ import { isAndroid } from 'tns-core-modules/platform';
 })
 export class AppComponent {
 
-  getIconSource(icon: string): string {
-    const iconPrefix = isAndroid ? 'res://' : 'res://tabIcons/';
+//   getIconSource(icon: string): string {
+//     const iconPrefix = isAndroid ? 'res://' : 'res://tabIcons/';
 
-    return iconPrefix + icon;
-}
+//     return iconPrefix + icon;
+// }
 }

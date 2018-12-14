@@ -18,17 +18,17 @@ export class CategoryEffects {
         private store$: Store<State>
         ) { }
 
-    // @Effect()
-    // getAll$: Observable<Action> = this.action$.pipe(
-    //     ofType(CategoryActions.Types.GET),
-    //     switchMap(() => {
-    //         return this.api.getAll()
-    //         .pipe(
-    //             // tslint:disable-next-line:no-shadowed-variable
-    //             map((action: CategoryActions.GetComplete) => new CategoryActions.GetComplete((action))),
-    //             // tap((res) => console.log(res))
-    //             // catchError(errorHandler(RecipeActions.GetError));
-    //         );
-    //     })
-    // );
+    @Effect()
+    getAll$: Observable<Action> = this.action$.pipe(
+        ofType(CategoryActions.Types.GET),
+        switchMap(() => {
+            return this.api.getAll()
+            .pipe(
+                // tslint:disable-next-line:no-shadowed-variable
+                map((action: CategoryActions.GetComplete) => new CategoryActions.GetComplete((action))),
+                // tap((res) => console.log(res))
+                // catchError(errorHandler(RecipeActions.GetError));
+            );
+        })
+    );
 }
