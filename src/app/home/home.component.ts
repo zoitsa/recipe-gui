@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  title = 'Recipes';
+  title = 'My App!';
   categories$: Observable<any>;
   subCategories$: Observable<any>;
   recipes$: Observable<any>;
