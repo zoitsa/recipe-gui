@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { isAndroid } from 'tns-core-modules/platform';
+
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  getIconSource(icon: string): string {
+    const iconPrefix = isAndroid ? 'res://' : 'res://tabIcons/';
 
+    return iconPrefix + icon;
+}
 }
