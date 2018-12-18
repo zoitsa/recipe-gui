@@ -4,11 +4,6 @@ import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
 
 import { AppRoutingModule, } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowseComponent } from './browse/browse.component';
-import { HomeComponent } from './home/home.component';
-// import { ItemDetailComponent } from './item-detail/item-detail.component';
-import { SearchComponent } from './search/search.component';
-
 import { StoreModule, ActionsSubject } from '@ngrx/store';
 import { CMSActionsSubject } from './services/dispatcher.service';
 import { reducers, metaReducers } from './reducers';
@@ -28,9 +23,6 @@ import { RecipeEffects } from './effects/recipes.effects';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    BrowseComponent,
-    SearchComponent,
   ],
   imports: [
     NativeScriptModule,

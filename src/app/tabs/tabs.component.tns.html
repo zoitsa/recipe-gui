@@ -1,0 +1,26 @@
+<ActionBar title="Recipes"></ActionBar>
+<DockLayout dock="bottom">
+    <TabView class="fa" (selectedIndexChanged)="onSelectedIndexChanged($event)">
+        <!--
+        To add a new TabView item, add a new layout component with a tabItem Angular directive.
+        Assign the tabItem directive an object that declares the tab item button's title and icon source.
+        -->
+        <StackLayout *tabItem="{iconSource: getIconSource('home')}">
+        <!-- <StackLayout *tabItem="{title: '&#xf015;'}"> -->
+            <!--
+            You can declare the layout and components of each view inside the TabView items directly.
+            In this case the view contents and back end logic are separated in nested components.
+            You can find these components in their respective folders /home, /browse etc.
+            -->
+            <app-home></app-home>
+        </StackLayout>
+        <StackLayout *tabItem="{iconSource: getIconSource('browse')}">
+        <!-- <StackLayout *tabItem="{title: '&#xf073;'}"> -->
+            <app-create></app-create>
+        </StackLayout>
+        <StackLayout *tabItem="{iconSource: getIconSource('search')}">
+        <!-- <StackLayout *tabItem="{title: '&#xf007;'}"> -->
+            <app-profile></app-profile>
+        </StackLayout>
+    </TabView>
+</DockLayout>
