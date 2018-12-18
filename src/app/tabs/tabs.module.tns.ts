@@ -8,7 +8,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { TabsComponent } from './tabs.component';
 
 @NgModule({
-  declarations: [HomeComponent, CreateComponent, ProfileComponent, TabsComponent],
+  declarations: [
+    HomeComponent,
+    CreateComponent,
+    ProfileComponent,
+    TabsComponent
+  ],
   imports: [
     TabsRoutingModule,
     NativeScriptCommonModule

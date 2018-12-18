@@ -2,13 +2,6 @@ import { NgModule } from '@angular/core';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
 import { Routes } from '@angular/router';
 
-import { BrowseComponent } from './browse/browse.component';
-import { HomeComponent } from './home/home.component';
-// import { ItemDetailComponent } from './item-detail/item-detail.component';
-import { SearchComponent } from './search/search.component';
-
-export const COMPONENTS = [BrowseComponent, HomeComponent, SearchComponent];
-
 const routes: Routes = [
   {
     path: '',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { isAndroid } from 'tns-core-modules/platform';
+// import { isAndroid } from 'tns-core-modules/platform';
 import { SelectedIndexChangedEventData, TabView, TabViewItem } from 'tns-core-modules/ui/tab-view';
 
 @Component({
@@ -31,7 +31,7 @@ export class TabsComponent implements OnInit {
 * You can find all resources in /App_Resources/os
 *************************************************************/
 getIconSource(icon: string): string {
-    return isAndroid ? '' : 'res://tabIcons/' + icon;
+    return 'res://tabIcons/' + icon;
 }
 
 /* ***********************************************************
