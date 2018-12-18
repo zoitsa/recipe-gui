@@ -5,11 +5,11 @@ import { Routes, RouterModule } from '@angular/router';
 export const routes: Routes = [
   {
       path: '',
-      redirectTo: '/tabs/home',
+      redirectTo: '/dashboard/home',
       pathMatch: 'full',
   },
   {
-      path: 'tabs',
+      path: 'dashboard',
       loadChildren: './tabs/tabs.module#TabsModule'
   },
 ];
