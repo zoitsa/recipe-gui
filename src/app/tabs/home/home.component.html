@@ -1,4 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <h1>Primary Categories!</h1>
 <div *ngFor="let category of categories$ | async">
   <button (click)="getCategoryTypes(category.id)">{{category.name}}</button>
@@ -12,6 +11,6 @@
 </div>
 
 <h1>Recipes!</h1>
-  <div *ngFor="let recipe of recipes$ | async ">
-    <button>{{recipe.name}}</button>
-  </div>
+<div *ngFor="let recipe of recipes$ | async ">
+  <button>{{recipe.name}}</button>
+</div>
