@@ -1,4 +1,8 @@
-<StackLayout  class="p-20">
-    <Label text="Welcome to {{ title }}" class="h1 text-center" textWrap="true"></Label>
-    <Button text="{{title}} works!" class="btn btn-primary"></Button>
-</StackLayout>
+<ListView [items]="categories$ | async" (tap)="onSelect($event)" class="list-group">
+    <ng-template let-category="item" let-i="index">
+        <!-- The item template can only have a single root view container (e.g. GridLayout, StackLayout, etc.)-->
+        <StackLayout orientation="horizontal" class="list-group-item">
+            <Label [text]="category.name"></Label>
+        </StackLayout>
+    </ng-template>
+</ListView>

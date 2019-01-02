@@ -37,8 +37,17 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(new RecipeActions.Get(subCategoryId));
   }
 
+  onSelect() {
+    console.log('hi');
+  }
+
   ngOnInit() {
     this.store.dispatch(new CategoryActions.Get());
+
+    const categories = this.categories$.subscribe(data => {
+      console.log(data);
+    });
+
   }
 
 }
