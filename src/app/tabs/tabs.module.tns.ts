@@ -6,13 +6,15 @@ import { HomeComponent } from './home/home.component';
 import { CreateComponent } from './create/create.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TabsComponent } from './tabs.component';
+import { SubcategoriesComponent } from './home/pages/subcategories/subcategories.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     CreateComponent,
     ProfileComponent,
-    TabsComponent
+    TabsComponent,
+    SubcategoriesComponent
   ],
   imports: [
     TabsRoutingModule,
