@@ -10,13 +10,11 @@ const routes: Routes = [
   {
     path: '',
     component: TabsComponent,
-    children: [
-      {
-        path: 'subcategories',
-        component: SubcategoriesComponent,
-      }
-    ]
   },
+  {
+    path: 'subcategories',
+    component: SubcategoriesComponent,
+  }
 ];
 
 @NgModule({

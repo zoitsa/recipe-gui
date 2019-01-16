@@ -1,4 +1,5 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NativeScriptRouterModule } from 'nativescript-angular/router';
 
 import { TabsRoutingModule } from './tabs-routing.module';
 import { NativeScriptCommonModule } from 'nativescript-angular/common';
@@ -14,11 +15,12 @@ import { SubcategoriesComponent } from './home/pages/subcategories/subcategories
     CreateComponent,
     ProfileComponent,
     TabsComponent,
-    SubcategoriesComponent
+    SubcategoriesComponent,
   ],
   imports: [
     TabsRoutingModule,
-    NativeScriptCommonModule
+    NativeScriptCommonModule,
+    NativeScriptRouterModule,
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

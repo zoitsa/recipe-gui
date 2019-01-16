@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterExtensions } from 'nativescript-angular/router';
+// import { RouterExtensions } from 'nativescript-angular/router';
 
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private store: Store<fromRoot.State>,
     private actions$: CMSActions,
-    private routerExtensions: RouterExtensions
+    // private routerExtensions: RouterExtensions
   ) {
       this.categories$ = this.store.select(fromRoot.selectAllCategories);
       this.subCategories$ = this.store.select(fromRoot.selectSelectedCategory);
@@ -32,6 +32,8 @@ export class HomeComponent implements OnInit {
   }
 
   getCategoryTypes(categoryId) {
+    console.log('category id');
+    console.log(categoryId);
     this.store.dispatch(new CategoryActions.Select(categoryId));
   }
 
@@ -40,10 +42,10 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(new RecipeActions.Get(subCategoryId));
   }
 
-  onSelect(id) {
-    console.log(id);
-    this.routerExtensions.navigate(['/tabs/subcategories']);
-  }
+  // onSelect(id) {
+  //   console.log(id);
+  //   // this.routerExtensions.navigate(['/tabs/subcategories']);
+  // }
 
   ngOnInit() {
     this.store.dispatch(new CategoryActions.Get());
