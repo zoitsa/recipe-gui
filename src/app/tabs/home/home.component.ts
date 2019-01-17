@@ -50,10 +50,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new CategoryActions.Get());
 
-    const categories = this.categories$.subscribe(data => {
-      console.log(data);
-    });
-
   }
 
 }
