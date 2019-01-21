@@ -3,12 +3,18 @@ import { Routes } from '@angular/router';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
 
 import { TabsComponent } from './tabs.component';
+import { SubcategoriesComponent } from './home/pages/subcategories/subcategories.component';
+
 
 const routes: Routes = [
   {
     path: '',
     component: TabsComponent,
   },
+  {
+    path: 'subcategories',
+    component: SubcategoriesComponent,
+  }
 ];
 
 @NgModule({
