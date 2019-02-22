@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '../../../../reducers';
 import { CMSActions } from '../../../../services/dispatcher.service';
-import { CategoryActions } from '../../../../actions/categories.actions';
+import { RecipeActions } from '../../../../actions/recipes.actions';
 import { Observable } from 'rxjs/Observable';
 
 
@@ -19,6 +19,11 @@ export class RecipesComponent implements OnInit {
     private actions$: CMSActions,
   ) {
     this.recipes$ = this.store.select(fromRoot.selectAllRecipes);
+  }
+
+  selectSingleRecipe(recipeId) {
+    console.log(recipeId);
+    this.store.dispatch(new RecipeActions.Select(recipeId));
   }
 
   ngOnInit() {

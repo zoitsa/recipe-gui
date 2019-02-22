@@ -31,6 +31,14 @@ export namespace RecipeReducer {
           selectedSubCategoryId: action.payload
         };
 
+      case RecipeActions.Types.SELECT:
+      console.log('reducer');
+      console.log(action.payload);
+        return {
+          ...state,
+          selectedRecipeId: action.payload
+      };
+
       case RecipeActions.Types.GET:
         return {
           ...state,

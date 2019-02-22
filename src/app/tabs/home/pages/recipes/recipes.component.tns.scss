@@ -1,1 +1,23 @@
 /* Add mobile styles for the component here.  */
+
+.overlay { 
+    background-color: #000000; 
+}
+            
+.overlay Image { 
+    opacity: 0.5; 
+}
+
+.labelsStackLayout {
+    color: White;
+    font-family: 'Nordica Plus', 'nordicaclassicltext';
+
+    .name {
+        font-size: 20;
+        font-weight: bold;
+    }
+
+    .description {
+        font-size: 12px;
+    }
+}

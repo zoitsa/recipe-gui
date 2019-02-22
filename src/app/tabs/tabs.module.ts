@@ -7,9 +7,19 @@ import { CreateComponent } from './create/create.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TabsComponent } from './tabs.component';
 import { SubcategoriesComponent } from './home/pages/subcategories/subcategories.component';
+import { SingleRecipeComponent } from './home/pages/single-recipe/single-recipe.component';
+import { RecipesComponent } from './home/pages/recipes/recipes.component';
 
 @NgModule({
-  declarations: [HomeComponent, CreateComponent, ProfileComponent, TabsComponent, SubcategoriesComponent],
+  declarations: [
+    HomeComponent,
+    CreateComponent,
+    ProfileComponent,
+    TabsComponent,
+    SubcategoriesComponent,
+    SingleRecipeComponent,
+    RecipesComponent
+  ],
   imports: [
     CommonModule,
     TabsRoutingModule
