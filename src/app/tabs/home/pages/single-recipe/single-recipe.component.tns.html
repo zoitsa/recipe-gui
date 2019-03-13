@@ -1,24 +1,26 @@
 <StackLayout class="overlay">
 	<Image [src]="singleRecipe.photo" width="100%"></Image>
 	<stackLayout horizontalAlignment="center" verticalAlignment="center">
-			<Label [text]="singleRecipe.name"></Label>
+		<Label [text]="singleRecipe.name"></Label>
 	</stackLayout>
-		
-	<SegmentedBar  [items]="items"  (selectedIndexChange)="onSelectedIndexChange($event)"></SegmentedBar>
+
+	<SegmentedBar [items]="items" (selectedIndexChange)="onSelectedIndexChange($event)"></SegmentedBar>
 	<GridLayout (swipe)="onSwipe($event)" rows="*" [visibility]="selectedIndex === 0 ? 'visible' : 'collapsed'">
-
-			<StackLayout>
-				<ListView [items]="singleRecipe.ingredients">
-					<ng-template let-ingredient="item" let-i="index" let-odd="odd" let-even="even">
-						<Label [text]="ingredient" textWrap="true"></Label>
-					</ng-template>
-				</ListView>
-			</StackLayout>
-
+		<StackLayout>
+			<ListView [items]="singleRecipe.ingredients">
+				<ng-template let-ingredient="item" let-i="index" let-odd="odd" let-even="even">
+					<Label [text]="ingredient" textWrap="true"></Label>
+				</ng-template>
+			</ListView>
+		</StackLayout>
 	</GridLayout>
-	<GridLayout (swipe)="onSwipe($event)" rows="*"  [visibility]="selectedIndex === 1 ? 'visible' : 'collapsed'">
-		<Label text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas felis id dolor semper, quis vulputate diam interdum. Quisque vulputate, velit id tempor scelerisque, libero leo pharetra orci, at fermentum eros dolor at elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel mollis nisl. Cras pretium a nulla sed mattis. Nullam eget nisl est. Pellentesque aliquam lectus in augue luctus vehicula." textWrap="true"></Label>
-		<Label text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas felis id dolor semper, quis vulputate diam interdum. Quisque vulputate, velit id tempor scelerisque, libero leo pharetra orci, at fermentum eros dolor at elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel mollis nisl. Cras pretium a nulla sed mattis. Nullam eget nisl est. Pellentesque aliquam lectus in augue luctus vehicula." textWrap="true"></Label>
+	<GridLayout (swipe)="onSwipe($event)" rows="*" [visibility]="selectedIndex === 1 ? 'visible' : 'collapsed'">
+		<ListView [items]="singleRecipe.steps">
+			<ng-template let-step="item" let-i="index" let-odd="odd" let-even="even">
+				<StackLayout [visibility]="!step.completed ? 'visible' : 'collapsed'">
+					<CheckBox  boxType="circle" [text]="step.recipeStep"></CheckBox>
+				</StackLayout>
+			</ng-template>
+		</ListView>
 	</GridLayout>
 </StackLayout>
-

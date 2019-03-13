@@ -34,6 +34,7 @@
     "@ngrx/store-devtools": "^6.1.2",
     "core-js": "^2.5.4",
     "nativescript-angular": "~7.0.0",
+    "nativescript-checkbox": "^3.0.3",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-ui-listview": "^5.1.1",
     "reflect-metadata": "~0.1.8",

@@ -14,6 +14,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { CategoryEffects } from './effects/category.effects';
 import { RecipeEffects } from './effects/recipes.effects';
 
+import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
+
 
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
@@ -34,6 +36,7 @@ import { RecipeEffects } from './effects/recipes.effects';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([CategoryEffects, RecipeEffects]),
+    TNSCheckBoxModule,
   ],
   providers: [
     { provide: ActionsSubject, useClass: CMSActionsSubject },

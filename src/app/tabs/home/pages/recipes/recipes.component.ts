@@ -22,6 +22,7 @@ export class RecipesComponent implements OnInit {
   }
 
   selectSingleRecipe(recipeId) {
+    console.log('recipeId');
     console.log(recipeId);
     this.store.dispatch(new RecipeActions.Select(recipeId));
   }

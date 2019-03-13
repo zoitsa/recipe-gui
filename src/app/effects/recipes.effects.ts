@@ -26,7 +26,10 @@ export class RecipeEffects {
             .pipe(
                 // tslint:disable-next-line:no-shadowed-variable
                 map((action: RecipeActions.GetComplete) => new RecipeActions.GetComplete((action))),
-                tap((res) => console.log(res))
+                tap((res) => {
+                    console.log('recipe effect');
+                    console.log(res);
+                })
                 // catchError(errorHandler(RecipeActions.GetError));
             );
         })

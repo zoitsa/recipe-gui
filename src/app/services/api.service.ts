@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 })
 export class ApiService {
 
-  private apiURL = 'https://recipes-server.now.sh';
+  private apiURL = 'https://recipe-server.now.sh';
 
   constructor(private http: HttpClient) { }
 

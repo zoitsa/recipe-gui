@@ -46,7 +46,9 @@ export namespace RecipeReducer {
         };
 
       case RecipeActions.Types.GET_COMPLETE:
-        return adapter.addMany(action.payload.recipes, {
+      console.log('recipe reducer');
+      console.log(action.payload);
+        return adapter.addMany(action.payload, {
           ...state,
           loading: false,
         });
