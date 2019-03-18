@@ -6,6 +6,7 @@ export namespace RecipeActions {
     GET_COMPLETE = '[recipe] GetComplete',
     GET_ERROR = '[recipe] GetError',
     SELECT = '[recipe] Select',
+    TOGGLE_STEP = '[recipe] ToggleStep'
   }
 
   export class Get implements Action {
@@ -28,10 +29,16 @@ export namespace RecipeActions {
     constructor(public payload: any) {}
   }
 
+  export class ToggleStep implements Action {
+    readonly type: string = Types.TOGGLE_STEP;
+    constructor(public payload: any) {}
+  }
+
   export type Actions
   = Get
   | GetComplete
   | GetError
   | Select
+  | ToggleStep
   ;
 }

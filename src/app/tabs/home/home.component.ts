@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(new CategoryActions.Select(categoryId));
   }
 
+  // for the web
   selectSubCategory(subCategoryId) {
     this.store.dispatch(new SubCategoryActions.Select(subCategoryId));
     this.store.dispatch(new RecipeActions.Get(subCategoryId));

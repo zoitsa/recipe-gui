@@ -5,6 +5,7 @@ import { CMSActions } from '../../../../services/dispatcher.service';
 import { Observable } from 'rxjs/Observable';
 import { SegmentedBar, SegmentedBarItem, SelectedIndexChangedEventData } from 'tns-core-modules/ui/segmented-bar';
 import { GestureTypes, SwipeGestureEventData, SwipeDirection } from 'tns-core-modules/ui/gestures';
+import { RecipeActions } from '../../../../actions/recipes.actions';
 
 @Component({
   selector: 'app-single-recipe',
@@ -14,6 +15,7 @@ import { GestureTypes, SwipeGestureEventData, SwipeDirection } from 'tns-core-mo
 export class SingleRecipeComponent implements OnInit {
   singleRecipe$: Observable<any>;
   recipeId$;
+  recipeSteps$;
   singleRecipe;
   selectedIndex = 0;
   items: Array<any>;
@@ -25,6 +27,7 @@ export class SingleRecipeComponent implements OnInit {
   ) {
     this.recipeId$ = this.store.select(fromRoot.selectRecipeSelectedId);
     this.singleRecipe$ = this.store.select(fromRoot.selectSelectedRecipe);
+    // this.recipeSteps$ = this.store.select(fromRoot.selectSelectedRecipeSteps);
   }
 
   // create custom segmented bar titles
@@ -56,6 +59,14 @@ export class SingleRecipeComponent implements OnInit {
       this.selectedIndex = 0;
       this.segmentedBar.selectedIndex = this.selectedIndex;
     }
+  }
+
+  checkedChange(stepsCheck, i) {
+    console.log('stepsCheck');
+    console.log(stepsCheck);
+    console.log(i);
+    console.log(this.singleRecipe.steps[i]);
+    this.store.dispatch(new RecipeActions.ToggleStep(this.singleRecipe.steps[i]));
   }
 
   ngOnInit() {
