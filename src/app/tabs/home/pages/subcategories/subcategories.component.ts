@@ -31,12 +31,7 @@ export class SubcategoriesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subCategories$.subscribe(data => {
-      console.log(data);
-    });
-    // this.recipes$.subscribe(data => {
-    //   console.log(data);
-    // });
+
   }
 
 }

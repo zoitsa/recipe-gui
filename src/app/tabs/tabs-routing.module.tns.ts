@@ -4,7 +4,8 @@ import { NativeScriptRouterModule } from 'nativescript-angular/router';
 
 import { TabsComponent } from './tabs.component';
 import { SubcategoriesComponent } from './home/pages/subcategories/subcategories.component';
-
+import { SingleRecipeComponent } from './home/pages/single-recipe/single-recipe.component';
+import { RecipesComponent } from './home/pages/recipes/recipes.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,14 @@ const routes: Routes = [
   {
     path: 'subcategories',
     component: SubcategoriesComponent,
+  },
+  {
+    path: 'recipes',
+    component: RecipesComponent,
+  },
+  {
+    path: 'single-recipe',
+    component: SingleRecipeComponent,
   }
 ];
 

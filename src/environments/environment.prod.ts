@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiURL: 'https://recipes-api.now.sh',
+  apiURL: 'https://recipe-server.now.sh',
 };

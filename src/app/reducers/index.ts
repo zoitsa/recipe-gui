@@ -64,4 +64,14 @@ export const selectRecipeSelectedId = createSelector(
   RecipeReducer.selectedRecipeId
 );
 
+export const selectSelectedRecipe = createSelector(
+  selectRecipeEntities,
+  selectRecipeSelectedId,
+  (entities, id) => entities[id]
+);
+
+
+
+
+
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
