@@ -1,32 +1,46 @@
-<StackLayout class="overlay">
-	<Image [src]="singleRecipe.photo" width="100%"></Image>
+<StackLayout *ngIf="singleRecipe$ | async as recipe" class="overlay">
+	<Image [src]="recipe.photo" width="100%"></Image>
 	<stackLayout horizontalAlignment="center" verticalAlignment="center">
-		<Label [text]="singleRecipe.name"></Label>
+		<Label [text]="recipe.name"></Label>
 	</stackLayout>
 
 	<SegmentedBar [items]="items" (selectedIndexChange)="onSelectedIndexChange($event)"></SegmentedBar>
 	<GridLayout (swipe)="onSwipe($event)" rows="*" [visibility]="selectedIndex === 0 ? 'visible' : 'collapsed'">
 		<StackLayout>
-			<ListView [items]="singleRecipe.ingredients">
+			<ListView [items]="recipe.ingredients">
 				<ng-template let-ingredient="item" let-i="index" let-odd="odd" let-even="even">
 					<Label [text]="ingredient" textWrap="true"></Label>
 				</ng-template>
 			</ListView>
 		</StackLayout>
 	</GridLayout>
-	<GridLayout (swipe)="onSwipe($event)" rows="*" [visibility]="selectedIndex === 1 ? 'visible' : 'collapsed'">
-		<ListView [items]="singleRecipe.steps">
-			<ng-template let-step="item" let-i="index" let-odd="odd" let-even="even">
-					<StackLayout [visibility]="!step.completed ? 'visible' : 'collapsed'">
-						<CheckBox #stepsCheck boxType="circle" [text]="step.recipeStep" (checkedChange)="checkedChange(stepsCheck, i)"></CheckBox>
-					</StackLayout>
-					
-					<!-- <StackLayout [visibility]="!step.completed ? 'collapsed' : 'visible'">
-						<Label text="completed"></Label>
-						<CheckBox #stepsCheck boxType="circle" [text]="step.recipeStep" (checkedChange)="checkedChange(stepsCheck, i)"></CheckBox>
-					</StackLayout> -->
+	<GridLayout (swipe)="onSwipe($event)" rows="*, *" [visibility]="selectedIndex === 1 ? 'visible' : 'collapsed'">
 
-			</ng-template>
-		</ListView>
+		<StackLayout row="0">
+			<Label text="completed"></Label>
+			<ListView [items]="recipe.steps">
+				<ng-template let-step="item" let-i="index" let-odd="odd" let-even="even">
+					<StackLayout [visibility]="step.completed ? 'visible' : 'collapsed'">
+						<CheckBox  boxType="circle" #stepsCheck [text]="step.recipeStep"
+							(checkedChange)="checkedChange(stepsCheck, i)"></CheckBox>
+					</StackLayout>
+				</ng-template>
+			</ListView>
+		</StackLayout>
+
+		<StackLayout row="1">
+			<Label text="not completed"></Label>
+			<ListView [items]="recipe.steps">
+				<ng-template let-step="item" let-i="index" let-odd="odd" let-even="even">
+					<StackLayout [visibility]="!step.completed ? 'visible' : 'collapsed'">
+						<CheckBox boxType="circle" #stepsCheck [text]="step.recipeStep"
+							(checkedChange)="checkedChange(stepsCheck, i)"></CheckBox>
+					</StackLayout>
+				</ng-template>
+			</ListView>
+		</StackLayout>
+
+
+
 	</GridLayout>
 </StackLayout>

@@ -17,6 +17,7 @@ export class SingleRecipeComponent implements OnInit {
   recipeId$;
   recipeSteps$;
   singleRecipe;
+  checkedOption = false;
   selectedIndex = 0;
   items: Array<any>;
   segmentedBar;
@@ -65,7 +66,12 @@ export class SingleRecipeComponent implements OnInit {
     console.log('stepsCheck');
     console.log(stepsCheck);
     console.log(i);
-    console.log(this.singleRecipe.steps[i]);
+    // console.log(stepsCheck.checked);
+    // console.log(stepsCheck.toggle);
+    // console.log(this.singleRecipe.steps[i]);
+    this.singleRecipe$.subscribe(data => {
+      this.singleRecipe = data;
+    });
     this.store.dispatch(new RecipeActions.ToggleStep(this.singleRecipe.steps[i]));
   }
 
@@ -73,11 +79,6 @@ export class SingleRecipeComponent implements OnInit {
     this.items = this.createSegmentedBarItems();
 
     this.recipeId$.subscribe(data => {
-      console.log('single-recipe');
-      console.log(data);
-    });
-    this.singleRecipe$.subscribe(data => {
-      this.singleRecipe = data;
       console.log('single-recipe');
       console.log(data);
     });
