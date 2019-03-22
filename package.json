@@ -38,6 +38,7 @@
     "core-js": "^2.5.4",
     "nativescript-angular": "~7.0.0",
     "nativescript-checkbox": "^3.0.3",
+    "nativescript-drop-down": "^5.0.0",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-ui-listview": "^5.2.0",
     "reflect-metadata": "~0.1.8",

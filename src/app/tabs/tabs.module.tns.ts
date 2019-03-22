@@ -4,7 +4,7 @@ import { NativeScriptRouterModule } from 'nativescript-angular/router';
 import { TabsRoutingModule } from './tabs-routing.module';
 import { NativeScriptCommonModule } from 'nativescript-angular/common';
 import { HomeComponent } from './home/home.component';
-import { CreateComponent } from './create/create.component';
+import { CreateComponent } from './create-recipe/pages/create/create.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TabsComponent } from './tabs.component';
 import { SubcategoriesComponent } from './home/pages/subcategories/subcategories.component';
@@ -12,6 +12,7 @@ import { SingleRecipeComponent } from './home/pages/single-recipe/single-recipe.
 import { RecipesComponent } from './home/pages/recipes/recipes.component';
 
 import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
+import { CreateFormComponent } from './create-recipe/components/create-form/create-form.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
     TabsComponent,
     SubcategoriesComponent,
     SingleRecipeComponent,
-    RecipesComponent
+    RecipesComponent,
+    CreateFormComponent
   ],
   imports: [
     TabsRoutingModule,
