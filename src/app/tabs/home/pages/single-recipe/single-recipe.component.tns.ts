@@ -3,6 +3,8 @@ import { Store, select } from '@ngrx/store';
 import * as fromRoot from '../../../../reducers';
 import { CMSActions } from '../../../../services/dispatcher.service';
 import { Observable } from 'rxjs/Observable';
+import { SegmentedBar, SegmentedBarItem, SelectedIndexChangedEventData } from 'tns-core-modules/ui/segmented-bar';
+import { GestureTypes, SwipeGestureEventData, SwipeDirection } from 'tns-core-modules/ui/gestures';
 import { RecipeActions } from '../../../../actions/recipes.actions';
 
 @Component({
@@ -28,6 +30,36 @@ export class SingleRecipeComponent implements OnInit {
     this.singleRecipe$ = this.store.select(fromRoot.selectSelectedRecipe);
   }
 
+  create custom segmented bar titles
+  private createSegmentedBarItems() {
+    const segmentedBarItems = [];
+    const tab1 = <SegmentedBarItem>new SegmentedBarItem();
+    tab1.title = 'Recipe';
+
+    const tab2 = <SegmentedBarItem>new SegmentedBarItem();
+    tab2.title = 'Instructions';
+
+    segmentedBarItems.push(tab1);
+    segmentedBarItems.push(tab2);
+
+    return segmentedBarItems;
+}
+
+handle the selectedIndexChange
+  public onSelectedIndexChange(args) {
+    this.segmentedBar = <SegmentedBar>args.object;
+    this.selectedIndex = this.segmentedBar.selectedIndex;
+  }
+
+   onSwipe(event: SwipeGestureEventData) {
+    if (this.selectedIndex === 0 && event.direction === SwipeDirection.left) {
+      this.selectedIndex = 1;
+      this.segmentedBar.selectedIndex = this.selectedIndex;
+    } else if (this.selectedIndex === 1 && event.direction === SwipeDirection.right) {
+      this.selectedIndex = 0;
+      this.segmentedBar.selectedIndex = this.selectedIndex;
+    }
+  }
 
   checkedChange(stepsCheck, i) {
     console.log('stepsCheck');
@@ -43,6 +75,7 @@ export class SingleRecipeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.items = this.createSegmentedBarItems();
 
     // this.recipeId$.subscribe(data => {
     //   console.log('single-recipe');
