@@ -12,6 +12,8 @@ import { SingleRecipeComponent } from './home/pages/single-recipe/single-recipe.
 import { RecipesComponent } from './home/pages/recipes/recipes.component';
 
 import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 import { CreateFormComponent } from './create-recipe/components/create-form/create-form.component';
 
 @NgModule({
@@ -30,6 +32,9 @@ import { CreateFormComponent } from './create-recipe/components/create-form/crea
     NativeScriptCommonModule,
     NativeScriptRouterModule,
     NativeScriptUIListViewModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NativeScriptFormsModule
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

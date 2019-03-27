@@ -6,7 +6,11 @@
       "version": "5.0.0"
     },
     "tns-android": {
+<<<<<<< HEAD
       "version": "5.0.0"
+=======
+      "version": "5.2.1"
+>>>>>>> feat(app): Populated category and type dropdowns with store data. Cleared the type dropdown when category is updated. Added imagepicker plugin.
     }
   },
   "version": "0.0.0",
@@ -39,6 +43,7 @@
     "nativescript-angular": "~7.0.0",
     "nativescript-checkbox": "^3.0.3",
     "nativescript-drop-down": "^5.0.0",
+    "nativescript-imagepicker": "^6.1.2",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-ui-listview": "^5.2.0",
     "reflect-metadata": "~0.1.8",

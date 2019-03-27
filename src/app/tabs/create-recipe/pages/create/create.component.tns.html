@@ -1,1 +1,5 @@
-<app-create-form></app-create-form>
+<app-create-form 
+[categories]="categoryNames$ | async" 
+[categoryTypes]="types$ | async" 
+(category)="onCategoryUpdated($event)"
+></app-create-form>

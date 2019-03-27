@@ -1,32 +1,27 @@
 <ActionBar title="Add Recipe"></ActionBar>
-<ScrollView>
+<ScrollView>                       
         <StackLayout class="form" [formGroup]="form">
                 <GridLayout rows="50,50,50,50,50,50,25,50,50,25,50,25,20,50,20" columns="*,100,*">
-                    <DropDown #dd
-                              id="category"
-                              backgroundColor="blue"
-                              [items]="items"
-                              [(ngModel)]="selectedIndex"
-                              hint="Category"
-                              (selectedIndexChanged)="onChange($event)"
-                              (opened)="onOpen()"
-                              (closed)="onClose()"
-                              row="0"
-                              col="1"
-                       >
-                    </DropDown>
-                    <DropDown #dd
-                              backgroundColor="blue"
-                              [items]="items"
-                              [(ngModel)]="selectedIndex"
-                              hint="Type"
-                              (selectedIndexChanged)="onChange($event)"
-                              (opened)="onOpen()"
-                              (closed)="onClose()"
-                              row="1"
-                              col="1"
-                    ></DropDown>
-                    
+                       <DropDown #category
+                                id="category"
+                                backgroundColor="blue"
+                                [items]="categories"                          
+                                hint="Category"
+                                (selectedIndexChanged)="onCategoryChange($event)"
+                                (opened)="onCategoryOpen()"
+                                row="0"
+                                col="1"
+                         >
+                      </DropDown>
+                      <DropDown #type
+                        backgroundColor="blue"
+                        [items]="categoryTypes"
+                        hint="Type"
+                        isEnabled="false"
+                        (selectedIndexChanged)="onTypeChange($event)"                      
+                        row="1"
+                        col="1"
+                        ></DropDown>           
                     <Label 
                         text="Name" 
                         row="2" 
@@ -125,6 +120,7 @@
                         text="Submit" 
                         row="13" 
                         col="1"
+                        (tap)="onSubmit()"
                     ></Button>
                 </GridLayout>
             </StackLayout>
