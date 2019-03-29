@@ -50,15 +50,15 @@ export class SingleRecipeComponent implements OnInit {
     segmentedBarItems.push(tab2);
 
     return segmentedBarItems;
-}
+  }
 
-// handle the selectedIndexChange
+  // handle the selectedIndexChange
   public onSelectedIndexChange(args) {
     this.segmentedBar = <SegmentedBar>args.object;
     this.selectedIndex = this.segmentedBar.selectedIndex;
   }
 
-   onSwipe(event: SwipeGestureEventData) {
+  onSwipe(event: SwipeGestureEventData) {
     if (this.selectedIndex === 0 && event.direction === SwipeDirection.left) {
       this.selectedIndex = 1;
       this.segmentedBar.selectedIndex = this.selectedIndex;
@@ -81,29 +81,43 @@ export class SingleRecipeComponent implements OnInit {
     this.store.dispatch(new RecipeActions.ToggleStep(this.singleRecipe.steps[i]));
   }
 
-  public onCellSwiping(args: ListViewEventData) {
+  public itemSelected(args: ListViewEventData) {
+    console.log('selected');
+    console.log(args.index);
+    this.singleRecipe$.subscribe(data => {
+      this.singleRecipe = data;
+    });
+    this.store.dispatch(new RecipeActions.ToggleStep(this.singleRecipe.steps[args.index]));
   }
 
-  public onSwipeCellStarted(args: ListViewEventData) {
-    const swipeLimits = args.data.swipeLimits;
-      const swipeView = args['object'];
-      const leftItem = swipeView.getViewById<View>('mark-view');
-      const rightItem = swipeView.getViewById<View>('delete-view');
-      swipeLimits.left = leftItem.getMeasuredWidth();
-      swipeLimits.right = rightItem.getMeasuredWidth();
-      swipeLimits.threshold = leftItem.getMeasuredWidth() / 2;
+  public itemDeselected(args: ListViewEventData) {
+    console.log('deselected');
+    console.log(args.index);
   }
 
-  public onSwipeCellFinished(args: ListViewEventData) {
-  }
+  // public onCellSwiping(args: ListViewEventData) {
+  // }
 
-  public onLeftSwipeClick(args: EventData) {
-    console.log('Left swipe click');
-  }
+  // public onSwipeCellStarted(args: ListViewEventData) {
+  //   const swipeLimits = args.data.swipeLimits;
+  //     const swipeView = args['object'];
+  //     const leftItem = swipeView.getViewById<View>('mark-view');
+  //     const rightItem = swipeView.getViewById<View>('delete-view');
+  //     swipeLimits.left = leftItem.getMeasuredWidth();
+  //     swipeLimits.right = rightItem.getMeasuredWidth();
+  //     swipeLimits.threshold = leftItem.getMeasuredWidth() / 2;
+  // }
 
-  public onRightSwipeClick(args: EventData) {
-    console.log('Right swipe click');
-  }
+  // public onSwipeCellFinished(args: ListViewEventData) {
+  // }
+
+  // public onLeftSwipeClick(args: EventData) {
+  //   console.log('Left swipe click');
+  // }
+
+  // public onRightSwipeClick(args: EventData) {
+  //   console.log('Right swipe click');
+  // }
 
   ngOnInit() {
     this.items = this.createSegmentedBarItems();
