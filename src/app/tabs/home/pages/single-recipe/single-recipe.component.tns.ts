@@ -6,6 +6,10 @@ import { Observable } from 'rxjs/Observable';
 import { SegmentedBar, SegmentedBarItem, SelectedIndexChangedEventData } from 'tns-core-modules/ui/segmented-bar';
 import { GestureTypes, SwipeGestureEventData, SwipeDirection } from 'tns-core-modules/ui/gestures';
 import { RecipeActions } from '../../../../actions/recipes.actions';
+import { ListViewEventData, RadListView } from 'nativescript-ui-listview';
+import { RadListViewComponent } from 'nativescript-ui-listview/angular';
+import { View } from 'tns-core-modules/ui/core/view';
+import { EventData } from 'tns-core-modules/data/observable';
 
 @Component({
   selector: 'app-single-recipe',
@@ -21,6 +25,9 @@ export class SingleRecipeComponent implements OnInit {
   selectedIndex = 0;
   items: Array<any>;
   segmentedBar;
+  private leftItem: View;
+  private rightItem: View;
+  private mainView: View;
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -30,7 +37,7 @@ export class SingleRecipeComponent implements OnInit {
     this.singleRecipe$ = this.store.select(fromRoot.selectSelectedRecipe);
   }
 
-  create custom segmented bar titles
+  // create custom segmented bar titles
   private createSegmentedBarItems() {
     const segmentedBarItems = [];
     const tab1 = <SegmentedBarItem>new SegmentedBarItem();
@@ -45,7 +52,7 @@ export class SingleRecipeComponent implements OnInit {
     return segmentedBarItems;
 }
 
-handle the selectedIndexChange
+// handle the selectedIndexChange
   public onSelectedIndexChange(args) {
     this.segmentedBar = <SegmentedBar>args.object;
     this.selectedIndex = this.segmentedBar.selectedIndex;
@@ -72,6 +79,30 @@ handle the selectedIndexChange
       this.singleRecipe = data;
     });
     this.store.dispatch(new RecipeActions.ToggleStep(this.singleRecipe.steps[i]));
+  }
+
+  public onCellSwiping(args: ListViewEventData) {
+  }
+
+  public onSwipeCellStarted(args: ListViewEventData) {
+    const swipeLimits = args.data.swipeLimits;
+      const swipeView = args['object'];
+      const leftItem = swipeView.getViewById<View>('mark-view');
+      const rightItem = swipeView.getViewById<View>('delete-view');
+      swipeLimits.left = leftItem.getMeasuredWidth();
+      swipeLimits.right = rightItem.getMeasuredWidth();
+      swipeLimits.threshold = leftItem.getMeasuredWidth() / 2;
+  }
+
+  public onSwipeCellFinished(args: ListViewEventData) {
+  }
+
+  public onLeftSwipeClick(args: EventData) {
+    console.log('Left swipe click');
+  }
+
+  public onRightSwipeClick(args: EventData) {
+    console.log('Right swipe click');
   }
 
   ngOnInit() {

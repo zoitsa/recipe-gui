@@ -15,7 +15,7 @@ import { CategoryEffects } from './effects/category.effects';
 import { RecipeEffects } from './effects/recipes.effects';
 
 import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
-
+import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
 
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
@@ -37,6 +37,7 @@ import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([CategoryEffects, RecipeEffects]),
     TNSCheckBoxModule,
+    NativeScriptUIListViewModule,
   ],
   providers: [
     { provide: ActionsSubject, useClass: CMSActionsSubject },
