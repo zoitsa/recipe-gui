@@ -4,6 +4,9 @@
     "id": "org.nativescript.recipegui",
     "tns-ios": {
       "version": "5.0.0"
+    },
+    "tns-android": {
+      "version": "5.0.0"
     }
   },
   "version": "0.0.0",
@@ -36,7 +39,7 @@
     "nativescript-angular": "~7.0.0",
     "nativescript-checkbox": "^3.0.3",
     "nativescript-theme-core": "~1.0.4",
-    "nativescript-ui-listview": "^5.1.1",
+    "nativescript-ui-listview": "^5.2.0",
     "reflect-metadata": "~0.1.8",
     "rxjs": "^6.2.0",
     "rxjs-compat": "^6.3.3",

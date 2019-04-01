@@ -1,46 +1,46 @@
-<StackLayout *ngIf="singleRecipe$ | async as recipe" class="overlay">
-	<Image [src]="recipe.photo" width="100%"></Image>
-	<stackLayout horizontalAlignment="center" verticalAlignment="center">
-		<Label [text]="recipe.name"></Label>
-	</stackLayout>
-
-	<SegmentedBar [items]="items" (selectedIndexChange)="onSelectedIndexChange($event)"></SegmentedBar>
-	<GridLayout (swipe)="onSwipe($event)" rows="*" [visibility]="selectedIndex === 0 ? 'visible' : 'collapsed'">
-		<StackLayout>
-			<ListView [items]="recipe.ingredients">
-				<ng-template let-ingredient="item" let-i="index" let-odd="odd" let-even="even">
-					<Label [text]="ingredient" textWrap="true"></Label>
-				</ng-template>
-			</ListView>
-		</StackLayout>
+<StackLayout width="100%" height="100%" *ngIf="singleRecipe$ | async as recipe" class="overlay">
+	<!-- <Image [src]="recipe.photo" width="100%"></Image> -->
+	<GridLayout rows="100">
+		<Label row="0" [text]="recipe.name" horizontalAlignment="center" verticalAlignment="center"></Label>
 	</GridLayout>
-	<GridLayout (swipe)="onSwipe($event)" rows="*, *" [visibility]="selectedIndex === 1 ? 'visible' : 'collapsed'">
 
-		<StackLayout row="0">
-			<Label text="completed"></Label>
-			<ListView [items]="recipe.steps">
-				<ng-template let-step="item" let-i="index" let-odd="odd" let-even="even">
-					<StackLayout [visibility]="step.completed ? 'visible' : 'collapsed'">
-						<CheckBox  boxType="circle" #stepsCheck [text]="step.recipeStep"
-							(checkedChange)="checkedChange(stepsCheck, i)"></CheckBox>
-					</StackLayout>
-				</ng-template>
-			</ListView>
-		</StackLayout>
+	<GridLayout columns="150, *" rows="*">
 
-		<StackLayout row="1">
-			<Label text="not completed"></Label>
-			<ListView [items]="recipe.steps">
-				<ng-template let-step="item" let-i="index" let-odd="odd" let-even="even">
-					<StackLayout [visibility]="!step.completed ? 'visible' : 'collapsed'">
-						<CheckBox boxType="circle" #stepsCheck [text]="step.recipeStep"
-							(checkedChange)="checkedChange(stepsCheck, i)"></CheckBox>
-					</StackLayout>
-				</ng-template>
-			</ListView>
-		</StackLayout>
+		<GridLayout row="0" col="0" style="border-color: #cdcdcd; border-width: 0 .2 0 0;">
+			<GridLayout tkExampleTitle tkToggleNavButton verticalAlignment="center">
+				<!-- >> angular-listview-item-selection-multiple -->
+				<RadListView [items]="recipe.ingredients" selectionBehavior="Press" multipleSelection="true">
+					<!-- << angular-listview-item-selection-multiple -->
+					<ng-template tkListItemTemplate let-ingredient="item">
+						<StackLayout 
+							verticalAlignment="center"
+							ios:class="iosListItemStackLayout" 
+							android:class="androidListItemStackLayout" 
+							style="border-color: #cdcdcd; border-width: 0 0 .2 0;">
+							<Label textWrap="true" ios:class="iosNameLabel ingredient" android:class="androidNameLabel" [text]="ingredient"></Label>
+						</StackLayout>
+					</ng-template>
+				</RadListView>
+			</GridLayout> <!-- ingredients container -->
+		</GridLayout>
 
+		<GridLayout row="0"  col="1" rows="*, auto" tkExampleTitle tkToggleNavButton>
+				<!-- >> angular-listview-howto-item-selection-events-html -->
+				<RadListView [items]="recipe.steps" selectionBehavior="Press" (itemSelected)="itemSelected($event)">
+						<!-- << angular-listview-howto-item-selection-events-html -->
+						
+						<!-- >> angular-listview-howto-item-selection-template-html -->
+						<ng-template tkListItemTemplate let-step="item">
+								<StackLayout ios:class="iosListItemStackLayout stepListItem"   [backgroundColor]="step.completed ? '#F0F0F0' : 'white'">
+									<Label ios:class="iosNameLabel" android:class="androidNameLabel" text="step #" textWrap="true" [class.completed]="step.completed"></Label>
+									<Label ios:class="iosDescriptionLabel" android:class="androidDescriptionLabel" [text]="step.recipeStep" textWrap="true" [class.completed]="step.completed"></Label>
+								</StackLayout>
+								
+						</ng-template>
+						<!-- << angular-listview-howto-item-selection-template-html -->
+				</RadListView>
+		</GridLayout>
 
+		</GridLayout> <!-- page grid container -->
 
-	</GridLayout>
 </StackLayout>

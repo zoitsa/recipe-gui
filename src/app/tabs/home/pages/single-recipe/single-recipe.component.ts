@@ -1,18 +1,20 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '../../../../reducers';
 import { CMSActions } from '../../../../services/dispatcher.service';
 import { Observable } from 'rxjs/Observable';
-import { SegmentedBar, SegmentedBarItem, SelectedIndexChangedEventData } from 'tns-core-modules/ui/segmented-bar';
-import { GestureTypes, SwipeGestureEventData, SwipeDirection } from 'tns-core-modules/ui/gestures';
 import { RecipeActions } from '../../../../actions/recipes.actions';
+import { ListViewEventData } from 'nativescript-ui-listview';
+import { Subject } from 'rxjs/Subject';
+import { takeUntil} from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-single-recipe',
   templateUrl: './single-recipe.component.html',
   styleUrls: ['./single-recipe.component.scss']
 })
-export class SingleRecipeComponent implements OnInit {
+export class SingleRecipeComponent implements OnInit, OnDestroy {
   singleRecipe$: Observable<any>;
   recipeId$;
   recipeSteps$;
@@ -20,7 +22,8 @@ export class SingleRecipeComponent implements OnInit {
   checkedOption = false;
   selectedIndex = 0;
   items: Array<any>;
-  segmentedBar;
+  private unsubscribe: Subject<void> = new Subject();
+
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -28,60 +31,40 @@ export class SingleRecipeComponent implements OnInit {
   ) {
     this.recipeId$ = this.store.select(fromRoot.selectRecipeSelectedId);
     this.singleRecipe$ = this.store.select(fromRoot.selectSelectedRecipe);
-    // this.recipeSteps$ = this.store.select(fromRoot.selectSelectedRecipeSteps);
   }
 
-  // create custom segmented bar titles
-  private createSegmentedBarItems() {
-    const segmentedBarItems = [];
-    const tab1 = <SegmentedBarItem>new SegmentedBarItem();
-    tab1.title = 'Recipe';
+  // -- rework this to work for the ingredient list
+  // checkedChange(stepsCheck, i) {
+  //   console.log('stepsCheck');
+  //   console.log(stepsCheck);
+  //   console.log(i);
+  //   // console.log(stepsCheck.checked);
+  //   // console.log(stepsCheck.toggle);
+  //   // console.log(this.singleRecipe.steps[i]);
+  //   this.singleRecipe$.subscribe(data => {
+  //     this.singleRecipe = data;
+  //   });
+  //   this.store.dispatch(new RecipeActions.ToggleStep(this.singleRecipe.steps[i]));
+  // }
 
-    const tab2 = <SegmentedBarItem>new SegmentedBarItem();
-    tab2.title = 'Instructions';
-
-    segmentedBarItems.push(tab1);
-    segmentedBarItems.push(tab2);
-
-    return segmentedBarItems;
-}
-
-// handle the selectedIndexChange
-  public onSelectedIndexChange(args) {
-    this.segmentedBar = <SegmentedBar>args.object;
-    this.selectedIndex = this.segmentedBar.selectedIndex;
-  }
-
-   onSwipe(event: SwipeGestureEventData) {
-    if (this.selectedIndex === 0 && event.direction === SwipeDirection.left) {
-      this.selectedIndex = 1;
-      this.segmentedBar.selectedIndex = this.selectedIndex;
-    } else if (this.selectedIndex === 1 && event.direction === SwipeDirection.right) {
-      this.selectedIndex = 0;
-      this.segmentedBar.selectedIndex = this.selectedIndex;
-    }
-  }
-
-  checkedChange(stepsCheck, i) {
-    console.log('stepsCheck');
-    console.log(stepsCheck);
-    console.log(i);
-    // console.log(stepsCheck.checked);
-    // console.log(stepsCheck.toggle);
-    // console.log(this.singleRecipe.steps[i]);
-    this.singleRecipe$.subscribe(data => {
+  public itemSelected(args: ListViewEventData) {
+    this.singleRecipe$.pipe(
+      takeUntil(this.unsubscribe)
+    )
+    .subscribe(data => {
       this.singleRecipe = data;
     });
-    this.store.dispatch(new RecipeActions.ToggleStep(this.singleRecipe.steps[i]));
-  }
+    this.store.dispatch(new RecipeActions.ToggleStep(this.singleRecipe.steps[args.index]));
+}
+
 
   ngOnInit() {
-    this.items = this.createSegmentedBarItems();
 
-    this.recipeId$.subscribe(data => {
-      console.log('single-recipe');
-      console.log(data);
-    });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }
