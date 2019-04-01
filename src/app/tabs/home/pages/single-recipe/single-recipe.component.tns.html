@@ -26,8 +26,7 @@
 
 		<GridLayout row="0"  col="1" rows="*, auto" tkExampleTitle tkToggleNavButton>
 				<!-- >> angular-listview-howto-item-selection-events-html -->
-				<RadListView [items]="recipe.steps" selectionBehavior="Press" (itemSelected)="itemSelected($event)"
-						(itemDeselected)="itemDeselected($event)">
+				<RadListView [items]="recipe.steps" selectionBehavior="Press" (itemSelected)="itemSelected($event)">
 						<!-- << angular-listview-howto-item-selection-events-html -->
 						
 						<!-- >> angular-listview-howto-item-selection-template-html -->
@@ -45,68 +44,3 @@
 		</GridLayout> <!-- page grid container -->
 
 </StackLayout>
-
-
-
-
-
-		<!-- <GridLayout row="0" col="1">
-			<GridLayout orientation="vertical" rows="*, auto" tkExampleTitle tkToggleNavButton>
-				<RadListView [items]="recipe.steps" selectionBehavior="None"
-					(itemSwipeProgressEnded)="onSwipeCellFinished($event)" (itemSwipeProgressStarted)="onSwipeCellStarted($event)"
-					(itemSwipeProgressChanged)="onCellSwiping($event)" swipeActions="true">
-					<ng-template tkListItemTemplate let-step="item">
-						<StackLayout ios:class="iosListItemStackLayout stepListItem" android:class="androidListItemStackLayout" >
-							<Label ios:class="iosNameLabel" android:class="androidNameLabel" text="Step #"></Label>
-							<Label ios:class="iosDescriptionLabel" android:class="androidDescriptionLabel" [text]="step.recipeStep" textWrap="true"></Label>
-						</StackLayout>
-					</ng-template>
-					<GridLayout *tkListItemSwipeTemplate columns="auto, *, auto" class="gridLayoutLayout">
-						<StackLayout id="mark-view" col="0" class="markViewStackLayout" (tap)="onLeftSwipeClick($event)">
-							<Label text="mark" class="swipeTemplateLabel" verticalAlignment="center"
-								horizontalAlignment="center"></Label>
-						</StackLayout>
-						<StackLayout id="delete-view" col="2" class="deleteViewStackLayout" (tap)="onRightSwipeClick($event)">
-							<Label text="mark" class="swipeTemplateLabel" verticalAlignment="center"
-								horizontalAlignment="center"></Label>
-						</StackLayout>
-					</GridLayout>
-				</RadListView>
-			</GridLayout> -->
-
-<!--  Segmented bar with checkboxes -->
-<!---<SegmentedBar [items]="items" (selectedIndexChange)="onSelectedIndexChange($event)"></SegmentedBar>
-<GridLayout (swipe)="onSwipe($event)" rows="*" [visibility]="selectedIndex === 0 ? 'visible' : 'collapsed'">
-	<StackLayout>
-		<ListView [items]="recipe.ingredients">
-			<ng-template let-ingredient="item" let-i="index" let-odd="odd" let-even="even">
-				<Label [text]="ingredient" textWrap="true"></Label>
-			</ng-template>
-		</ListView>
-	</StackLayout>
-</GridLayout>
-<GridLayout (swipe)="onSwipe($event)" rows="*, *" [visibility]="selectedIndex === 1 ? 'visible' : 'collapsed'">
-	<StackLayout row="0">
-		<Label text="completed"></Label>
-		<ListView [items]="recipe.steps">
-			<ng-template let-step="item" let-i="index" let-odd="odd" let-even="even">
-				<StackLayout [visibility]="step.completed ? 'visible' : 'collapsed'">
-					<CheckBox  boxType="circle" #stepsCheck [text]="step.recipeStep"
-						(checkedChange)="checkedChange(stepsCheck, i)"></CheckBox>
-				</StackLayout>
-			</ng-template>
-		</ListView>
-	</StackLayout>
-
-	<StackLayout row="1">
-		<Label text="not completed"></Label>
-		<ListView [items]="recipe.steps">
-			<ng-template let-step="item" let-i="index" let-odd="odd" let-even="even">
-				<StackLayout [visibility]="!step.completed ? 'visible' : 'collapsed'">
-					<CheckBox boxType="circle" #stepsCheck [text]="step.recipeStep"
-						(checkedChange)="checkedChange(stepsCheck, i)"></CheckBox>
-				</StackLayout>
-			</ng-template>
-		</ListView>
-	</StackLayout>
-</GridLayout> -->
