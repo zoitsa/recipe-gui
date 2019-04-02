@@ -1,7 +1,7 @@
 <ActionBar title="Add Recipe"></ActionBar>
 <ScrollView>                       
         <StackLayout class="form" [formGroup]="form">
-                <GridLayout rows="50,50,50,50,50,50,25,50,50,25,50,25,20,50,20" columns="*,100,*">
+                <GridLayout rows="50,50,50,50,50,50,25,50,50,25,50,25,100,50,25,100,40" columns="*,100,*">
                        <DropDown #category
                                 id="category"
                                 backgroundColor="blue"
@@ -95,7 +95,7 @@
                                     </StackLayout>                                
                                 </ng-template>                                    
                             </ListView>                                           
-                        </StackLayout>        
+                    </StackLayout>        
                     <Button 
                         backgroundColor="gray" 
                         text="+" 
@@ -114,11 +114,34 @@
                         text="+" 
                         row="11" 
                         width="40"
+                        (tap)="onSelectImage()"
+                    ></Button>                  
+                    <StackLayout orientation="horizontal" row="12" colSpan="3">
+							<StackLayout *ngFor="let imageUri of imageUris" style="margin: 10">
+								<Image [src]='imageUri' height="100"></Image>
+							</StackLayout>
+                    </StackLayout>
+                    <Label 
+                        text="Take Photo" 
+                        row="13" 
+                        textAlignment="center"
+                    ></Label>
+                    <Button 
+                        backgroundColor="gray" 
+                        text="+" 
+                        row="14" 
+                        width="40"
+                        (tap)="onCaptureImage()"
                     ></Button>
+                    <StackLayout orientation="horizontal" row="15" colSpan="3">
+							<StackLayout *ngFor="let captureUri of captureUris" style="margin: 10">
+								<Image [src]='captureUri' height="100"></Image>
+							</StackLayout>
+                    </StackLayout>       
                     <Button 
                         backgroundColor="gray" 
                         text="Submit" 
-                        row="13" 
+                        row="16"                         
                         col="1"
                         (tap)="onSubmit()"
                     ></Button>
