@@ -1,7 +1,7 @@
 <ActionBar title="Add Recipe"></ActionBar>
 <ScrollView>                       
         <StackLayout class="form" [formGroup]="form">
-                <GridLayout rows="50,50,50,50,50,50,25,50,50,25,50,25,100,50,25,100,40" columns="*,100,*">
+                <GridLayout rows="50,50,50,50,50,200,25,50,100,25,50,25,100,50,25,100,40" columns="*,120,*">
                        <DropDown #category
                                 id="category"
                                 backgroundColor="blue"
@@ -51,21 +51,23 @@
                         row="4" 
                         marginLeft="20"
                     ></Label>
-                    <StackLayout formArrayName="ingredients" row="5" col="1">
-                        <ListView [items]="form.get('ingredients').value">                           
-                            <ng-template
-                                let-ingredient="item"
-                                let-i="index"
-                            >
-                                <StackLayout>
-                                    <TextField 
-                                        hint="Ingredient"                                       
-                                        width="300"
-                                        [formControlName]="i"                                    
-                                    ></TextField>
-                                </StackLayout>                                
-                            </ng-template>                                    
-                        </ListView>                                           
+                    <StackLayout formArrayName="ingredients" row="5" colSpan="2">
+                        <ScrollView>
+                                <ListView height="200" [items]="form.get('ingredients').value">                           
+                                        <ng-template
+                                            let-ingredient="item"
+                                            let-i="index"
+                                        >
+                                            <StackLayout>
+                                                <TextField 
+                                                    hint="Add Ingredient"                                       
+                                                    width="300"
+                                                    [formControlName]="i"                                    
+                                                ></TextField>
+                                            </StackLayout>                                
+                                        </ng-template>                                    
+                                    </ListView>             
+                        </ScrollView>                                                      
                     </StackLayout>                    
                     <Button 
                         backgroundColor="gray" 
@@ -80,21 +82,22 @@
                         row="7" 
                         marginLeft="45"
                     ></Label>            
-                    <StackLayout formArrayName="steps" row="8" col="1">
-                            <ListView [items]="form.get('steps').value">                           
-                                <ng-template
-                                    let-step="item"
-                                    let-i="index"
-                                >
-                                    <StackLayout>
-                                        <TextField 
-                                            hint="Step"                                          
-                                            width="300"
-                                            [formControlName]="i"                                    
-                                        ></TextField>
-                                    </StackLayout>                                
-                                </ng-template>                                    
-                            </ListView>                                           
+                    <StackLayout formArrayName="steps" row="8" colSpan="3">
+                            <ListView height="200" [items]="form.get('steps').value">                           
+                                        <ng-template
+                                            let-step="item"
+                                            let-i="index"
+                                        >
+                                            <StackLayout>
+                                                <TextField 
+                                                    hint="Step"                                          
+                                                    width="300"
+                                                    [formControlName]="i"                                    
+                                                ></TextField>
+                                            </StackLayout>                                
+                                        </ng-template>                                    
+                            </ListView>           
+                                               
                     </StackLayout>        
                     <Button 
                         backgroundColor="gray" 
@@ -137,13 +140,13 @@
 							<StackLayout *ngFor="let captureUri of captureUris" style="margin: 10">
 								<Image [src]='captureUri' height="100"></Image>
 							</StackLayout>
-                    </StackLayout>       
+                    </StackLayout>
                     <Button 
                         backgroundColor="gray" 
                         text="Submit" 
                         row="16"                         
                         col="1"
-                        (tap)="onSubmit()"
+                        (tap)="onCreateRecipe()"
                     ></Button>
                 </GridLayout>
             </StackLayout>

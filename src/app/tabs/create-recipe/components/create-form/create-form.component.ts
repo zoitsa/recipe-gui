@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { SelectedIndexChangedEventData } from 'nativescript-drop-down';
-import { FormGroup, FormBuilder, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import * as imagepicker from "nativescript-imagepicker";
 import {ImageSource, fromFile, fromResource, fromBase64} from "tns-core-modules/image-source";
-import {Folder, path, knownFolders} from "tns-core-modules/file-system";
+import {Folder, path, knownFolders, File} from "tns-core-modules/file-system";
 import * as camera from "nativescript-camera";
+import { ApiService } from '~/app/services/api.service';
 
 // import { Image } from "tns-core-modules/ui/image";
 // import { Page } from 'ui/page';
@@ -36,15 +37,11 @@ export class CreateFormComponent implements OnInit, OnChanges {
   public selectedIndex = 1;
     public items: Array<string>;
  
-    constructor() {
+    constructor(private apiService:ApiService) {
   
     }
  
-    // public onChange(args: SelectedIndexChangedEventData) {
-    //     this.typeDropDown.nativeElement.isEnabled = true;
-    //     console.log('changed!');
-    // }
- 
+
     ngOnChanges(changes: SimpleChanges) {
      
       if(changes.categoryTypes) {
@@ -59,7 +56,7 @@ export class CreateFormComponent implements OnInit, OnChanges {
       description: new FormControl(null, {updateOn: 'blur'}),
       ingredients: new FormArray([new FormControl(null)]),
       steps: new FormArray([new FormControl(null)]),
-      imageNames: new FormArray([])
+      photo: new FormArray([])
     });  
   }
 
@@ -73,16 +70,26 @@ export class CreateFormComponent implements OnInit, OnChanges {
     (<FormArray>this.form.get('steps')).push(control);
   }
 
-  onSubmit() {
-    console.log(this.form.get('category'));
-  }
-
-  onCategoryOpen() {
+  onCreateRecipe() {
+    // if(typeof this.imageUris[0].path === "string") {
+    //   console.log("string");
+    // }
+    console.log(typeof this.imageUris[0].path)
     
+    const recipeForm = { 
+      name: this.form.get('name').value, 
+      description: this.form.get('description').value, 
+      photo: this.imageUris[0].name, 
+      ingredients: ['chicken'], 
+      steps: [{ recipeStep: 'step 1'}],
+      tag: 'poultry recipe'
+    };
+    console.log(recipeForm)
+    this.apiService.postRecipe(recipeForm).subscribe(res => console.log(res));
   }
 
   onCategoryChange(args: SelectedIndexChangedEventData) {
-    console.log("Category chosen!");
+    console.log("Category chosen!!");
     // console.log(data);
     this.typeDropDown.nativeElement.items = [];
     this.typeDropDown.nativeElement.selectedIndex = "0";
@@ -118,10 +125,12 @@ export class CreateFormComponent implements OnInit, OnChanges {
             const saved: boolean = imageSource.saveToFile(filePath, "png");
             if (saved) {
                 console.log("Image saved successfully!");         
-                that.imageAssets.push(fileName);                        
-                for(let asset of that.imageAssets){
-                  console.log(asset);
-                }
+                // that.imageAssets.push(fileName);                        
+                // for(let asset of that.imageAssets){
+                //   console.log(asset);
+                // }
+                const file: File = File.fromPath(filePath);
+                console.log(file);
                 that.imageIndex++;
             }           
           
@@ -151,10 +160,10 @@ export class CreateFormComponent implements OnInit, OnChanges {
                                 const folderPath: string = knownFolders.documents().path;
                                 const fileName = `capture${that.captureIndex}.png`;
                                 const filePath = path.join(folderPath, fileName);
-                                that.captureUris.push(filePath);
+                                that.imageUris.push(filePath);
                                 const saved: boolean = imageSource.saveToFile(filePath, "png"); 
                                 if (saved) {
-                                  console.log("Image saved successfully!");         
+                                  console.log("Image saved successfully!!");         
                                   // that.captureAssets.push(fileName);                        
                                   // for(let asset of that.imageAssets){
                                   //   console.log(asset);
