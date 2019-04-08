@@ -74,17 +74,17 @@ export class CreateFormComponent implements OnInit, OnChanges {
     // if(typeof this.imageUris[0].path === "string") {
     //   console.log("string");
     // }
-    console.log(typeof this.imageUris[0].path)
+    // console.log(typeof this.imageUris[0].path)
     
     const recipeForm = { 
       name: this.form.get('name').value, 
       description: this.form.get('description').value, 
       photo: this.imageUris[0].name, 
-      ingredients: ['chicken'], 
+      ingredients: this.form.get('ingredients').value, 
       steps: [{ recipeStep: 'step 1'}],
       tag: 'poultry recipe'
     };
-    console.log(recipeForm)
+    // console.log(this.form.value)
     this.apiService.postRecipe(recipeForm).subscribe(res => console.log(res));
   }
 
@@ -160,7 +160,7 @@ export class CreateFormComponent implements OnInit, OnChanges {
                                 const folderPath: string = knownFolders.documents().path;
                                 const fileName = `capture${that.captureIndex}.png`;
                                 const filePath = path.join(folderPath, fileName);
-                                that.imageUris.push(filePath);
+                                that.captureUris.push(filePath);
                                 const saved: boolean = imageSource.saveToFile(filePath, "png"); 
                                 if (saved) {
                                   console.log("Image saved successfully!!");         

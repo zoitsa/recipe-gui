@@ -1,7 +1,7 @@
 <ActionBar title="Add Recipe"></ActionBar>
 <ScrollView>                       
         <StackLayout class="form" [formGroup]="form">
-                <GridLayout rows="50,50,50,50,50,200,25,50,100,25,50,25,100,50,25,100,40" columns="*,120,*">
+                <GridLayout rows="50,50,50,50,50,*,25,50,*,25,50,25,100,50,25,100,40" columns="*,100,*">
                        <DropDown #category
                                 id="category"
                                 backgroundColor="blue"
@@ -50,25 +50,16 @@
                         text="Ingredient(s)" 
                         row="4" 
                         marginLeft="20"
-                    ></Label>
-                    <StackLayout formArrayName="ingredients" row="5" colSpan="2">
-                        <ScrollView>
-                                <ListView height="200" [items]="form.get('ingredients').value">                           
-                                        <ng-template
-                                            let-ingredient="item"
-                                            let-i="index"
-                                        >
-                                            <StackLayout>
-                                                <TextField 
-                                                    hint="Add Ingredient"                                       
-                                                    width="300"
-                                                    [formControlName]="i"                                    
-                                                ></TextField>
-                                            </StackLayout>                                
-                                        </ng-template>                                    
-                                    </ListView>             
-                        </ScrollView>                                                      
-                    </StackLayout>                    
+                    ></Label>                   
+                    <StackLayout formArrayName="ingredients" row="5" colSpan="3">      
+                            <StackLayout *ngFor="let ingredientControl of form.get('ingredients').controls; let i = index">
+                                <TextField 
+                                    hint="Ingredient"                                       
+                                    width="300"
+                                    [formControlName]="i"                                    
+                                ></TextField>
+                            </StackLayout>                                                            
+                     </StackLayout>                                        
                     <Button 
                         backgroundColor="gray" 
                         text="+" 
@@ -81,24 +72,16 @@
                         text="Step(s)" 
                         row="7" 
                         marginLeft="45"
-                    ></Label>            
-                    <StackLayout formArrayName="steps" row="8" colSpan="3">
-                            <ListView height="200" [items]="form.get('steps').value">                           
-                                        <ng-template
-                                            let-step="item"
-                                            let-i="index"
-                                        >
-                                            <StackLayout>
-                                                <TextField 
-                                                    hint="Step"                                          
-                                                    width="300"
-                                                    [formControlName]="i"                                    
-                                                ></TextField>
-                                            </StackLayout>                                
-                                        </ng-template>                                    
-                            </ListView>           
-                                               
-                    </StackLayout>        
+                    ></Label>                            
+                    <StackLayout formArrayName="steps" row="8" colSpan="3">      
+                            <StackLayout *ngFor="let stepsControl of form.get('steps').controls; let i = index">
+                                <TextField 
+                                    hint="Step"                                       
+                                    width="300"
+                                    [formControlName]="i"                                    
+                                ></TextField>
+                            </StackLayout>                                                            
+                     </StackLayout>
                     <Button 
                         backgroundColor="gray" 
                         text="+" 
@@ -125,7 +108,7 @@
 							</StackLayout>
                     </StackLayout>
                     <Label 
-                        text="Take Photo" 
+                        text="Take Photo!" 
                         row="13" 
                         textAlignment="center"
                     ></Label>
