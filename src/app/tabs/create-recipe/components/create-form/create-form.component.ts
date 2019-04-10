@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewChildren, QueryList, AfterViewInit, Renderer2, OnDestroy } from '@angular/core';
 import { SelectedIndexChangedEventData } from 'nativescript-drop-down';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import * as imagepicker from "nativescript-imagepicker";
-import {ImageSource, fromFile, fromResource, fromBase64} from "tns-core-modules/image-source";
-import {Folder, path, knownFolders, File} from "tns-core-modules/file-system";
+import {ImageSource } from "tns-core-modules/image-source";
+import {path, knownFolders, File} from "tns-core-modules/file-system";
 import * as camera from "nativescript-camera";
 import { ApiService } from '~/app/services/api.service';
+import { Subscription } from 'rxjs';
 
 // import { Image } from "tns-core-modules/ui/image";
 // import { Page } from 'ui/page';
@@ -19,12 +20,14 @@ import { ApiService } from '~/app/services/api.service';
   templateUrl: './create-form.component.html',
   styleUrls: ['./create-form.component.scss']
 })
-export class CreateFormComponent implements OnInit, OnChanges {
+export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   form: FormGroup;
   @Input() categories;
   @Input() categoryTypes;
   @ViewChild('category') categoryDropDown: ElementRef;
   @ViewChild('type') typeDropDown: ElementRef;
+  @ViewChildren('ingredientsEl') ingredients: QueryList<ElementRef>;
+  @ViewChildren('stepsEl') steps: QueryList<ElementRef>;
   @Output() category: EventEmitter<any> = new EventEmitter();
   imageAssets = [];
   imageUris = [];
@@ -33,6 +36,9 @@ export class CreateFormComponent implements OnInit, OnChanges {
   imageSrc: any;
   imageIndex = 1;
   captureIndex = 1;
+  ingredient: Subscription;
+  step: Subscription;
+  selectedImage: File;
 
   public selectedIndex = 1;
     public items: Array<string>;
@@ -60,6 +66,20 @@ export class CreateFormComponent implements OnInit, OnChanges {
     });  
   }
 
+  ngAfterViewInit() {
+    this.ingredient = this.ingredients.changes.subscribe(() => {
+      if(this.ingredients.length > 1){
+        this.ingredients.last.nativeElement.focus();
+      }
+    });
+
+    this.step = this.steps.changes.subscribe(() => {
+      if(this.steps.length > 1){
+        this.steps.last.nativeElement.focus();
+      }      
+    });
+  }
+
   onAddIngredient() {
     const control = new FormControl(null);
     (<FormArray>this.form.get('ingredients')).push(control);
@@ -71,26 +91,21 @@ export class CreateFormComponent implements OnInit, OnChanges {
   }
 
   onCreateRecipe() {
-    // if(typeof this.imageUris[0].path === "string") {
-    //   console.log("string");
-    // }
-    // console.log(typeof this.imageUris[0].path)
+      console.log(this.imageUris);
     
     const recipeForm = { 
       name: this.form.get('name').value, 
       description: this.form.get('description').value, 
-      photo: this.imageUris[0].name, 
+      photo: this.selectedImage, 
       ingredients: this.form.get('ingredients').value, 
-      steps: [{ recipeStep: 'step 1'}],
+      steps: this.form.get('steps').value,
       tag: 'poultry recipe'
     };
-    // console.log(this.form.value)
     this.apiService.postRecipe(recipeForm).subscribe(res => console.log(res));
   }
 
   onCategoryChange(args: SelectedIndexChangedEventData) {
-    console.log("Category chosen!!");
-    // console.log(data);
+
     this.typeDropDown.nativeElement.items = [];
     this.typeDropDown.nativeElement.selectedIndex = "0";
     this.category.emit(args.newIndex);
@@ -129,8 +144,8 @@ export class CreateFormComponent implements OnInit, OnChanges {
                 // for(let asset of that.imageAssets){
                 //   console.log(asset);
                 // }
-                const file: File = File.fromPath(filePath);
-                console.log(file);
+                that.selectedImage = File.fromPath(filePath);
+                console.log(this.selectedImage);
                 that.imageIndex++;
             }           
           
@@ -168,6 +183,7 @@ export class CreateFormComponent implements OnInit, OnChanges {
                                   // for(let asset of that.imageAssets){
                                   //   console.log(asset);
                                   // }
+
                                   that.captureIndex++;
                                 }  
                               }, (err) => {
@@ -191,6 +207,10 @@ export class CreateFormComponent implements OnInit, OnChanges {
               )
       }
   }
-  
+    
+  ngOnDestroy() {
+    this.ingredient.unsubscribe();
+    this.step.unsubscribe();
+  }
 
 }

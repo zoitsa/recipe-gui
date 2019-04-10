@@ -52,11 +52,12 @@
                         marginLeft="20"
                     ></Label>                   
                     <StackLayout formArrayName="ingredients" row="5" colSpan="3">      
-                            <StackLayout *ngFor="let ingredientControl of form.get('ingredients').controls; let i = index">
+                            <StackLayout #ingredientsEl *ngFor="let ingredientControl of form.get('ingredients').controls; let i = index">
                                 <TextField 
                                     hint="Ingredient"                                       
                                     width="300"
-                                    [formControlName]="i"                                    
+                                    [formControlName]="i" 
+                                    class="ingredient"                                   
                                 ></TextField>
                             </StackLayout>                                                            
                      </StackLayout>                                        
@@ -73,8 +74,8 @@
                         row="7" 
                         marginLeft="45"
                     ></Label>                            
-                    <StackLayout formArrayName="steps" row="8" colSpan="3">      
-                            <StackLayout *ngFor="let stepsControl of form.get('steps').controls; let i = index">
+                    <StackLayout #steps formArrayName="steps" row="8" colSpan="3">      
+                            <StackLayout #stepsEl *ngFor="let stepsControl of form.get('steps').controls; let i = index">
                                 <TextField 
                                     hint="Step"                                       
                                     width="300"
