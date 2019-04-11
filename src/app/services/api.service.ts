@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as bghttp from 'nativescript-background-http'; 
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -27,37 +27,47 @@ export class ApiService {
   }
 
   postRecipe(recipe) {
-    const session = bghttp.session('image-upload');
-    const subject = new Subject<any>();
+    // const session = bghttp.session('file-upload');
+    // const subject = new Subject<any>();
 
-    const request = {
-      url: `${this.apiURL}/recipe/${recipe.type}`,
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/octet-stream"
-      },
-      description: 'test'
-    };
+    // const request = {
+    //   url: `${this.apiURL}/recipe/${recipe.type}`,
+    //   method: 'POST',
+    //   headers: {
+    //     "Content-Type": "application/octet-stream"
+    //   },
+    //   description: 'test'
+    // };
 
-    let task: bghttp.Task;
-    const params = [
-      { name: 'name', value: recipe.name },
-      { name: 'description', value: recipe.description },
-      { name: 'photo', filename: recipe.photo, mimeType: 'image/png' },
-      { name: 'ingredients', value: JSON.stringify(recipe.ingredients) }
-    ];
-    console.log(params);
-    task = session.multipartUpload(params, request);
-    task.on('responded', (event: any) => {
-      if (event.data && event.data.error) {
-        subject.error(event.data);
-      } else {
-        subject.next(event.data);
-      }
-    });
-    task.on('error', (event) => subject.error(event));
+    let body = new HttpParams();
+    body = body.set('name', recipe.name);
+    body = body.set('description', recipe.description);
+    // body = body.set('ingredients', recipe.ingredients);
+    // body = body.set('photo', recipe.photo);
+    console.log(body);
+    return this.http.post(`${this.apiURL}/recipe/1`, body);
+     
+
+    // let task: bghttp.Task;
+    // const params = [
+    //   { name: 'name', value: recipe.name },
+    //   { name: 'description', value: recipe.description },      
+    //   { name: 'ingredients', value: JSON.stringify(recipe.ingredients) },
+    //   { name: 'ingredients', value: recipe.ingredients },
+    //   { name: 'photo', filename: recipe.photo, mimeType: 'image/png' },
+    // ];
+    // console.log(params);
+    // task = session.multipartUpload(params, request);
+    // task.on('responded', (event: any) => {
+    //   if (event.data && event.data.error) {
+    //     subject.error(event.data);
+    //   } else {
+    //     subject.next(event.data);
+    //   }
+    // });
+    // task.on('error', (event) => subject.error(event));
     // task.on('error', (e) =>console.log("received " + e.responseCode + " code."));
-    return subject;
+    // return subject;
   }
 
 }

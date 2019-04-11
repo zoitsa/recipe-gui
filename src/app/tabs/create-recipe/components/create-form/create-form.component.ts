@@ -1,4 +1,17 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewChildren, QueryList, AfterViewInit, Renderer2, OnDestroy } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  ViewChild, 
+  ElementRef, 
+  Input, 
+  OnChanges, 
+  SimpleChanges, 
+  Output,   
+  EventEmitter, 
+  ViewChildren, 
+  QueryList, 
+  AfterViewInit, 
+  OnDestroy } from '@angular/core';
 import { SelectedIndexChangedEventData } from 'nativescript-drop-down';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import * as imagepicker from "nativescript-imagepicker";
@@ -31,6 +44,7 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
   @Output() category: EventEmitter<any> = new EventEmitter();
   imageAssets = [];
   imageUris = [];
+  base64images = [];
   captureAssets = [];
   captureUris = [];
   imageSrc: any;
@@ -97,8 +111,9 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
     const recipeForm = { 
       name: this.form.get('name').value, 
       description: this.form.get('description').value, 
-      photo: this.imageUris[0], 
-      ingredients: this.form.get('ingredients').value,       
+      photo: this.base64images[0], 
+      ingredients: this.form.get('ingredients').value,
+      // ingredients: [1, 2, 3],       
       // steps: this.form.get('steps').value,
       // tag: 'poultry recipe'
       type: this.recipeType
@@ -139,14 +154,18 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
             const source = new ImageSource();
             source.fromAsset(selected)
             .then((imageSource: ImageSource) => {
+            const base64image = imageSource.toBase64String("png", 60);
+            console.log(base64image);
+            that.base64images.push(base64image);
             const folderPath: string = knownFolders.documents().path;
             const fileName = `test${that.imageIndex}.png`;
             const filePath = path.join(folderPath, fileName);
             console.log(filePath);
-            that.imageUris.push(filePath);
+            that.imageUris.push(filePath);            
             const saved: boolean = imageSource.saveToFile(filePath, "png");
             if (saved) {
-                console.log("Image saved successfully!");         
+                console.log("Image saved successfully!"); 
+                that.selectedImage = File.fromPath(filePath);
                 // that.imageAssets.push(fileName);                        
                 // for(let asset of that.imageAssets){
                 //   console.log(asset);
@@ -182,7 +201,7 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
                                 const folderPath: string = knownFolders.documents().path;
                                 const fileName = `capture${that.captureIndex}.png`;
                                 const filePath = path.join(folderPath, fileName);
-                                that.captureUris.push(filePath);
+                                that.captureUris.push(filePath);                                
                                 const saved: boolean = imageSource.saveToFile(filePath, "png"); 
                                 if (saved) {
                                   console.log("Image saved successfully!!");         
