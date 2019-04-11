@@ -39,6 +39,7 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
   ingredient: Subscription;
   step: Subscription;
   selectedImage: File;
+  recipeType: number;
 
   public selectedIndex = 1;
     public items: Array<string>;
@@ -96,11 +97,13 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
     const recipeForm = { 
       name: this.form.get('name').value, 
       description: this.form.get('description').value, 
-      photo: this.selectedImage, 
-      ingredients: this.form.get('ingredients').value, 
-      steps: this.form.get('steps').value,
-      tag: 'poultry recipe'
+      photo: this.imageUris[0], 
+      ingredients: this.form.get('ingredients').value,       
+      // steps: this.form.get('steps').value,
+      // tag: 'poultry recipe'
+      type: this.recipeType
     };
+    console.log(recipeForm);
     this.apiService.postRecipe(recipeForm).subscribe(res => console.log(res));
   }
 
@@ -110,6 +113,10 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
     this.typeDropDown.nativeElement.selectedIndex = "0";
     this.category.emit(args.newIndex);
    
+  }
+
+  onTypeChange(args: SelectedIndexChangedEventData) {
+    this.recipeType = args.newIndex;
   }
 
   onSelectImage() {
@@ -144,8 +151,8 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
                 // for(let asset of that.imageAssets){
                 //   console.log(asset);
                 // }
-                that.selectedImage = File.fromPath(filePath);
-                console.log(this.selectedImage);
+                // that.selectedImage = File.fromPath(filePath);
+                // console.log(this.selectedImage);
                 that.imageIndex++;
             }           
           
@@ -207,6 +214,8 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
               )
       }
   }
+
+ 
     
   ngOnDestroy() {
     this.ingredient.unsubscribe();

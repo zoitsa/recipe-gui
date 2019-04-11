@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class ApiService {
 
+
   private apiURL = 'https://recipe-server.now.sh';
 
   constructor(private http: HttpClient) { }
@@ -30,8 +31,11 @@ export class ApiService {
     const subject = new Subject<any>();
 
     const request = {
-      url: `${this.apiURL}/recipe/4`,
+      url: `${this.apiURL}/recipe/${recipe.type}`,
       method: 'POST',
+      headers: {
+        "Content-Type": "application/octet-stream"
+      },
       description: 'test'
     };
 
@@ -40,11 +44,9 @@ export class ApiService {
       { name: 'name', value: recipe.name },
       { name: 'description', value: recipe.description },
       { name: 'photo', filename: recipe.photo, mimeType: 'image/png' },
-      { name: 'ingredients', value: recipe.ingredients },
-      { name: 'steps', value: recipe.steps },
-      { name: 'tag', value: recipe.tag }
+      { name: 'ingredients', value: JSON.stringify(recipe.ingredients) }
     ];
-
+    console.log(params);
     task = session.multipartUpload(params, request);
     task.on('responded', (event: any) => {
       if (event.data && event.data.error) {
@@ -54,7 +56,7 @@ export class ApiService {
       }
     });
     task.on('error', (event) => subject.error(event));
-
+    // task.on('error', (e) =>console.log("received " + e.responseCode + " code."));
     return subject;
   }
 
