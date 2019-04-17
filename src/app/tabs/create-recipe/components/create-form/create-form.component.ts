@@ -112,9 +112,8 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
       name: this.form.get('name').value, 
       description: this.form.get('description').value, 
       photo: this.imageUris[0], 
-      // ingredients: this.form.get('ingredients').value,
-      // ingredients: [1, 2, 3],       
-      // steps: this.form.get('steps').value,
+      ingredients: this.form.get('ingredients').value,   
+      steps: this.form.get('steps').value,
       // tag: 'poultry recipe'
       type: this.recipeType
     };
@@ -164,7 +163,7 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
             that.imageUris.push(filePath);            
             const saved: boolean = imageSource.saveToFile(filePath, "png");
             if (saved) {
-                console.log("Image saved successfully!"); 
+                console.log("Image saved successfully!!"); 
                 that.selectedImage = File.fromPath(filePath);
                 // that.imageAssets.push(fileName);                        
                 // for(let asset of that.imageAssets){

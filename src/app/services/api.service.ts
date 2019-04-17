@@ -38,33 +38,22 @@ export class ApiService {
       },
       description: 'test'
     };
-
-    // let body = new HttpParams();
-    // body = body.set('name', recipe.name);
-    // body = body.set('description', recipe.description);
-    // body = body.set('ingredients', recipe.ingredients);
-    // body = body.set('photo', recipe.photo);
-    // console.log(body);
-    // return this.http.post(`${this.apiURL}/recipe/1`, body);
-     
+    
 
     let task: bghttp.Task;
     const params = [
       { name: 'name', value: recipe.name },
       { name: 'description', value: recipe.description },
-
-      // { name: 'ingredients', value: JSON.stringify(recipe.ingredients) },
-      // { name: 'ingredients', value: recipe.ingredients },
       { name: 'photo', filename: recipe.photo, mimeType: 'image/png' }
     ];
 
-    // for(let i in recipe.ingredients) {
-    //   params.push({ name: 'ingredients', value: recipe.ingredients[i]});
-    // }
+    for(let i in recipe.ingredients) {
+      params.push({ name: 'ingredients', value: recipe.ingredients[i]});
+    }
 
-    // for(let j in recipe.steps) {
-    //   params.push({ name: 'steps', value: recipe.steps[j]});
-    // }
+    for(let j in recipe.steps) {
+      params.push({ name: 'steps', value: recipe.steps[j]});
+    }
 
 
     console.log(params);
