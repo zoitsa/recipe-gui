@@ -153,9 +153,9 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
             const source = new ImageSource();
             source.fromAsset(selected)
             .then((imageSource: ImageSource) => {
-            const base64image = imageSource.toBase64String("png", 60);
-            console.log(base64image);
-            that.base64images.push(base64image);
+            // const base64image = imageSource.toBase64String("png", 60);
+            // console.log(base64image);
+            // that.base64images.push(base64image);
             const folderPath: string = knownFolders.documents().path;
             const fileName = `test${that.imageIndex}.png`;
             const filePath = path.join(folderPath, fileName);
@@ -163,7 +163,7 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
             that.imageUris.push(filePath);            
             const saved: boolean = imageSource.saveToFile(filePath, "png");
             if (saved) {
-                console.log("Image saved successfully!!"); 
+                console.log("Image saved successfully!"); 
                 that.selectedImage = File.fromPath(filePath);
                 // that.imageAssets.push(fileName);                        
                 // for(let asset of that.imageAssets){
