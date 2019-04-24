@@ -32,11 +32,17 @@ export class ApiService {
   postRecipe(recipe) {
     const recipeType = recipe.type;
     delete recipe.type;
+    // const updatedRecipe = {
+    //     'name': recipe.name,
+    //     'description': recipe.description,
+    //     'ingredients': '',
+    // }
+    // updatedRecipe.ingredients
     // const session = bghttp.session('file-upload');
     // const subject = new Subject<any>();
 
     // const request = {
-    //   url: `${this.apiURL}/recipe/${recipeType}`,
+    //   url: `${this.apiURL}/recipe/${recipe.type}`,
     //   method: 'POST',
     //   headers: {
     //     "Content-Type": "application/octet-stream"
@@ -54,10 +60,10 @@ export class ApiService {
 
     // const httpOptions = {
     //   headers: new HttpHeaders({
-    //     'Content-type': 'multipart/form-data'
+    //     'Content-type': 'application/x-www-form-urlencoded'
     //   })
     // }
-    
+
     return this.http.post(`${this.apiURL}/recipe/${recipeType}`, recipe);
 
     // recipe.ingredients.map(v => { name: 'ingredients', value: v})
@@ -73,6 +79,8 @@ export class ApiService {
     //   ...recipe.steps.map(step => {
     //     return { name: 'steps', value: step }
     //   }),
+    //   { name: 'ingredients', value: JSON.stringify(recipe.ingredients) },
+    //   { name: 'steps', value: JSON.stringify(recipe.steps)}
     // ];
 
 
