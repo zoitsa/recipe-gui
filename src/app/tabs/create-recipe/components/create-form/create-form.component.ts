@@ -111,11 +111,11 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
     const recipeForm = { 
       name: this.form.get('name').value, 
       description: this.form.get('description').value, 
-      photo: this.imageUris[0], 
       ingredients: this.form.get('ingredients').value,   
       steps: this.form.get('steps').value,
       // tag: 'poultry recipe'
-      type: this.recipeType
+      type: this.recipeType,
+      photo: this.imageUris[0]
     };
     console.log(recipeForm);
     this.apiService.postRecipe(recipeForm).subscribe(res => console.log(res));

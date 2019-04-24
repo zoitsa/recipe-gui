@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +14,7 @@ export class ApiService {
 
 
   private apiURL = 'https://recipe-server.now.sh';
+  // private apiURL = 'http://localhost:1337';
 
   constructor(private http: HttpClient) { }
 
@@ -27,47 +30,86 @@ export class ApiService {
   }
 
   postRecipe(recipe) {
-    const session = bghttp.session('file-upload');
-    const subject = new Subject<any>();
+    const recipeType = recipe.type;
+    delete recipe.type;
+    // const session = bghttp.session('file-upload');
+    // const subject = new Subject<any>();
 
-    const request = {
-      url: `${this.apiURL}/recipe/${recipe.type}`,
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/octet-stream"
-      },
-      description: 'test'
-    };
+    // const request = {
+    //   url: `${this.apiURL}/recipe/${recipeType}`,
+    //   method: 'POST',
+    //   headers: {
+    //     "Content-Type": "application/octet-stream"
+    //   },
+    //   description: 'test'
+    // };
+
+    // let body = new HttpParams();
+    // body = body.set('name', recipe.name);
+    // body = body.set('description', recipe.description);
+    // body = body.set('ingredients', recipe.ingredients);
+    // body = body.set('steps', recipe.steps);
+    // body = body.set('photo', recipe.photo);
+    // console.log(body);
+
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-type': 'multipart/form-data'
+    //   })
+    // }
     
+    return this.http.post(`${this.apiURL}/recipe/${recipeType}`, recipe);
 
-    let task: bghttp.Task;
-    const params = [
-      { name: 'name', value: recipe.name },
-      { name: 'description', value: recipe.description },
-      { name: 'photo', filename: recipe.photo, mimeType: 'image/png' }
-    ];
+    // recipe.ingredients.map(v => { name: 'ingredients', value: v})
 
-    for(let i in recipe.ingredients) {
-      params.push({ name: 'ingredients', value: recipe.ingredients[i]});
-    }
+    // let task: bghttp.Task;
+    // const params = [
+    //   { name: 'name', value: recipe.name },
+    //   { name: 'description', value: recipe.description },
+    //   { name: 'photo', filename: recipe.photo, mimeType: 'image/png' },
+    //   ...recipe.ingredients.map(ing => { 
+    //     return { name: 'ingredients', value: ing }
+    //   }),
+    //   ...recipe.steps.map(step => {
+    //     return { name: 'steps', value: step }
+    //   }),
+    // ];
 
-    for(let j in recipe.steps) {
-      params.push({ name: 'steps', value: recipe.steps[j]});
-    }
+
+    // for(let i in recipe.ingredients) {
+    //   if (recipe.ingredients.length === 1) {
+    //     params.push({ name: 'ingredients', value: recipe.ingredients[i].split()});
+    //   } else {
+    //     params.push({ name: 'ingredients', value: recipe.ingredients[i]});
+    //   }
+    //   params.push({ name: 'ingredients', value: recipe.ingredients[i]});
+    // }
+
+    // for(let j in recipe.steps) {
+    //   if (recipe.steps.length === 1) {
+    //     params.push({ name: 'steps', value: recipe.steps});
+    //   }
+    //   else {
+    //     params.push({ name: 'steps', value: recipe.steps[j]});
+    //   }
+    //   params.push({ name: 'steps', value: recipe.steps[j]});
+    // }
 
 
-    console.log(params);
-    task = session.multipartUpload(params, request);
-    task.on('responded', (event: any) => {
-      if (event.data && event.data.error) {
-        subject.error(event.data);
-      } else {
-        subject.next(event.data);
-      }
-    });
-    task.on('error', (event) => subject.error(event));
-    task.on('error', (e) =>console.log("received " + e.responseCode + " code."));
-    return subject;
+    // console.log(params);
+    // task = session.multipartUpload(params, request);
+    // task.on('responded', (event: any) => {
+    //   if (event.data && event.data.error) {
+    //     subject.error(event.data);
+    //   } else {
+    //     subject.next(event.data);
+    //   }
+    // });
+    // // task.on('error', (event) => subject.error(event));
+    // task.on('error', (e) => console.log("received " + e.responseCode + " code."));
+    
+    // return subject;
+   
   }
 
 }
