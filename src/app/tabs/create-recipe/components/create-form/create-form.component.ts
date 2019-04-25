@@ -172,11 +172,13 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
                 // that.selectedImage = File.fromPath(filePath);
                 // console.log(this.selectedImage);
                 that.imageIndex++;
-            }           
-          
+            }              
               
           })
-        })
+          .catch(function(e) {
+            console.log(e);
+          })
+        })        
     }).catch(function (e) {
         // process error
         console.log(e);
@@ -220,16 +222,7 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
                           .catch((err) => {
                               console.log("Error -> " + err.message);
                           });
-                      }
-
-                  // },
-                  // function failure() {
-                  //     dialogs.alert("Permission Denied").then(()=> {
-                  //         console.log("Dialog closed!");
-                  //     });
-                  // }
-
-              )
+                      })
       }
   }
 
