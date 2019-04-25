@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+
 import { AppRoutingModule, } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StoreModule, ActionsSubject } from '@ngrx/store';
@@ -12,6 +13,7 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { CategoryEffects } from './effects/category.effects';
 import { RecipeEffects } from './effects/recipes.effects';
+
 
 @NgModule({
   declarations: [

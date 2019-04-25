@@ -26,7 +26,7 @@ export class CategoryEffects {
             .pipe(
                 // tslint:disable-next-line:no-shadowed-variable
                 map((action: CategoryActions.GetComplete) => new CategoryActions.GetComplete((action))),
-                // tap((res) => console.log(res))
+                // tap((res) => console.log(res.payload))
                 // catchError(errorHandler(RecipeActions.GetError));
             );
         })

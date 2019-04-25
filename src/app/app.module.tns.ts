@@ -2,6 +2,8 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
+import { NativeScriptFormsModule } from 'nativescript-angular/forms';
+import { DropDownModule } from "nativescript-drop-down/angular";
 
 import { AppRoutingModule, } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +18,8 @@ import { RecipeEffects } from './effects/recipes.effects';
 
 import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
 import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
@@ -32,12 +36,15 @@ import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
     NativeScriptModule,
     NativeScriptHttpClientModule,
     NativeScriptRouterModule,
+    NativeScriptFormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([CategoryEffects, RecipeEffects]),
     TNSCheckBoxModule,
     NativeScriptUIListViewModule,
+    DropDownModule
   ],
   providers: [
     { provide: ActionsSubject, useClass: CMSActionsSubject },

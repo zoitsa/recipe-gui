@@ -1,0 +1,136 @@
+<ActionBar title="Add Recipe"></ActionBar>
+<ScrollView>                       
+        <StackLayout class="form" [formGroup]="form">
+                <GridLayout rows="50,50,50,50,50,*,25,50,*,25,50,25,100,50,25,100,40" columns="*,100,*">
+                       <DropDown #category
+                                id="category"
+                                backgroundColor="blue"
+                                [items]="categories"                          
+                                hint="Category"
+                                (selectedIndexChanged)="onCategoryChange($event)"                             
+                                row="0"
+                                col="1"
+                         >
+                      </DropDown>
+                      <DropDown #type
+                        backgroundColor="blue"
+                        [items]="categoryTypes"
+                        hint="Type"
+                        isEnabled="false"
+                        (selectedIndexChanged)="onTypeChange($event)"                      
+                        row="1"
+                        col="1"
+                        ></DropDown>           
+                    <Label 
+                        text="Name" 
+                        row="2" 
+                        textAlignment="center"
+                    ></Label>
+                    <TextField 
+                        hint="Name" 
+                        row="2" 
+                        col="1" 
+                        colSpan="2"
+                        formControlName="name"
+                    ></TextField>
+                    <Label 
+                        text="Description" 
+                        row="3" 
+                        textAlignment="center"
+                    ></Label>
+                    <TextField 
+                        hint="Description" 
+                        row="3" 
+                        col="1" 
+                        colSpan="2"
+                        formControlName="description"
+                    ></TextField>
+                    <Label 
+                        text="Ingredient(s)" 
+                        row="4" 
+                        marginLeft="20"
+                    ></Label>                   
+                    <StackLayout formArrayName="ingredients" row="5" colSpan="3">      
+                            <StackLayout #ingredientsEl *ngFor="let ingredientControl of form.get('ingredients').controls; let i = index">
+                                <TextField 
+                                    hint="Ingredient"                                       
+                                    width="300"
+                                    [formControlName]="i" 
+                                    class="ingredient"                                   
+                                ></TextField>
+                            </StackLayout>                                                            
+                     </StackLayout>                                        
+                    <Button 
+                        backgroundColor="gray" 
+                        text="+" 
+                        row="6" 
+                        col="2" 
+                        width="40"
+                        (tap)="onAddIngredient()"
+                    ></Button>
+                    <Label 
+                        text="Step(s)" 
+                        row="7" 
+                        marginLeft="45"
+                    ></Label>                            
+                    <StackLayout #steps formArrayName="steps" row="8" colSpan="3">      
+                            <StackLayout #stepsEl *ngFor="let stepsControl of form.get('steps').controls; let i = index">
+                                <TextField 
+                                    hint="Step"                                       
+                                    width="300"
+                                    [formControlName]="i"                                    
+                                ></TextField>
+                            </StackLayout>                                                            
+                     </StackLayout>
+                    <Button 
+                        backgroundColor="gray" 
+                        text="+" 
+                        row="9" 
+                        col="2" 
+                        width="40"
+                        (tap)="onAddStep()"
+                    ></Button>
+                    <Label 
+                        text="Select Photo" 
+                        row="10" 
+                        textAlignment="center"
+                    ></Label>
+                    <Button 
+                        backgroundColor="gray" 
+                        text="+" 
+                        row="11" 
+                        width="40"
+                        (tap)="onSelectImage()"
+                    ></Button>                  
+                    <StackLayout orientation="horizontal" row="12" colSpan="3">
+							<StackLayout *ngFor="let imageUri of imageUris" style="margin: 10">
+								<Image [src]='imageUri' height="100"></Image>
+							</StackLayout>
+                    </StackLayout>
+                    <Label 
+                        text="Take Photo!" 
+                        row="13" 
+                        textAlignment="center"
+                    ></Label>
+                    <Button 
+                        backgroundColor="gray" 
+                        text="+" 
+                        row="14" 
+                        width="40"
+                        (tap)="onCaptureImage()"
+                    ></Button>
+                    <StackLayout orientation="horizontal" row="15" colSpan="3">
+							<StackLayout *ngFor="let captureUri of captureUris" style="margin: 10">
+								<Image [src]='captureUri' height="100"></Image>
+							</StackLayout>
+                    </StackLayout>
+                    <Button 
+                        backgroundColor="gray" 
+                        text="Submit" 
+                        row="16"                         
+                        col="1"
+                        (tap)="onCreateRecipe()"
+                    ></Button>
+                </GridLayout>
+            </StackLayout>
+</ScrollView>
