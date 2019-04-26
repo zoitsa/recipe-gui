@@ -54,44 +54,43 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
   step: Subscription;
   selectedImage: File;
   recipeType: number;
+  galleryUris = [];
+  mainPhotoUri = '';
 
   public selectedIndex = 1;
     public items: Array<string>;
- 
-    constructor(private apiService:ApiService) {
-  
+
+    constructor(private apiService: ApiService) {
     }
- 
 
     ngOnChanges(changes: SimpleChanges) {
-     
-      if(changes.categoryTypes) {
-    
+      if (changes.categoryTypes) {
+
         this.typeDropDown.nativeElement.isEnabled = true;
       }
     }
 
   ngOnInit() {
-    this.form = new FormGroup({  
+    this.form = new FormGroup({
       name: new FormControl(null, {updateOn: 'blur'}),
       description: new FormControl(null, {updateOn: 'blur'}),
       ingredients: new FormArray([new FormControl(null)]),
       steps: new FormArray([new FormControl(null)]),
       photo: new FormArray([])
-    });  
+    });
   }
 
   ngAfterViewInit() {
     this.ingredient = this.ingredients.changes.subscribe(() => {
-      if(this.ingredients.length > 1){
+      if (this.ingredients.length > 1) {
         this.ingredients.last.nativeElement.focus();
       }
     });
 
     this.step = this.steps.changes.subscribe(() => {
-      if(this.steps.length > 1){
+      if (this.steps.length > 1) {
         this.steps.last.nativeElement.focus();
-      }      
+      }
     });
   }
 
@@ -107,15 +106,15 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
 
   onCreateRecipe() {
       console.log(this.imageUris);
-    
-    const recipeForm = { 
-      name: this.form.get('name').value, 
-      description: this.form.get('description').value, 
-      ingredients: this.form.get('ingredients').value,   
+
+    const recipeForm = {
+      name: this.form.get('name').value,
+      description: this.form.get('description').value,
+      ingredients: this.form.get('ingredients').value,
       steps: this.form.get('steps').value,
       // tag: 'poultry recipe'
       type: this.recipeType,
-      photo: this.imageUris[0]
+      photo: this.mainPhotoUri,
     };
     console.log(recipeForm);
     this.apiService.postRecipe(recipeForm).subscribe(res => console.log(res));
@@ -133,23 +132,22 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
     this.recipeType = args.newIndex;
   }
 
-  onSelectImage() {
-    let that = this;    
+  onSelectMainPhoto() {
+    let that = this;
 
     let context = imagepicker.create({
-      mode: "single" // use "multiple" for multiple selection
+      mode: 'single' // use "multiple" for multiple selection
     });
 
     context
     .authorize()
-    .then(function() {       
-        that.imageSrc = null;
+    .then(function() {
         return context.present();
     })
     .then(function(selection) {
         selection.forEach(function(selected) {
               // process the selected image
-          
+
             const source = new ImageSource();
             source.fromAsset(selected)
             .then((imageSource: ImageSource) => {
@@ -160,25 +158,70 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
             const fileName = `test${that.imageIndex}.png`;
             const filePath = path.join(folderPath, fileName);
             console.log(filePath);
-            that.imageUris.push(filePath);            
-            const saved: boolean = imageSource.saveToFile(filePath, "png");
+            that.mainPhotoUri = filePath;
+            const saved: boolean = imageSource.saveToFile(filePath, 'png');
             if (saved) {
-                console.log("Image saved successfully!"); 
+                console.log('Default image saved successfully!');
+                that.imageIndex++;
+            }
+
+          })
+          .catch(function(e) {
+            console.log(e);
+          });
+        });
+    }).catch(function (e) {
+        // process error
+        console.log(e);
+    });
+  }
+
+  onSelectImages() {
+    let that = this;    
+
+    let context = imagepicker.create({
+      mode: 'multiple' // use "multiple" for multiple selection
+    });
+
+    context
+    .authorize()
+    .then(function() {
+        return context.present();
+    })
+    .then(function(selection) {
+        selection.forEach(function(selected) {
+              // process the selected image
+
+            const source = new ImageSource();
+            source.fromAsset(selected)
+            .then((imageSource: ImageSource) => {
+            // const base64image = imageSource.toBase64String("png", 60);
+            // console.log(base64image);
+            // that.base64images.push(base64image);
+            const folderPath: string = knownFolders.documents().path;
+            const fileName = `test${that.imageIndex}.png`;
+            const filePath = path.join(folderPath, fileName);
+            console.log(filePath);
+            that.imageUris.push(filePath);
+            that.galleryUris.push(filePath);
+            const saved: boolean = imageSource.saveToFile(filePath, 'png');
+            if (saved) {
+                console.log('Image saved successfully!');
                 that.selectedImage = File.fromPath(filePath);
-                // that.imageAssets.push(fileName);                        
+                // that.imageAssets.push(fileName);
                 // for(let asset of that.imageAssets){
                 //   console.log(asset);
                 // }
                 // that.selectedImage = File.fromPath(filePath);
                 // console.log(this.selectedImage);
                 that.imageIndex++;
-            }              
-              
+            }
+
           })
           .catch(function(e) {
             console.log(e);
-          })
-        })        
+          });
+        });
     }).catch(function (e) {
         // process error
         console.log(e);
@@ -189,7 +232,7 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
 
   onCaptureImage() {
         let that = this;
-          if(camera.isAvailable()){
+          if (camera.isAvailable()) {
               camera.requestPermissions().then(
                   // function success() {
                       () => {
@@ -197,37 +240,36 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
                           .then((imageAsset) => {
                               const source = new ImageSource();
                               // source.fromAsset(imageAsset);
-                              
                               source.fromAsset(imageAsset).then((imageSource: ImageSource) => {
                                 const folderPath: string = knownFolders.documents().path;
                                 const fileName = `capture${that.captureIndex}.png`;
                                 const filePath = path.join(folderPath, fileName);
-                                that.captureUris.push(filePath);                                
-                                const saved: boolean = imageSource.saveToFile(filePath, "png"); 
+                                that.captureUris.push(filePath);
+                                that.imageUris.push(filePath);
+                                const saved: boolean = imageSource.saveToFile(filePath, 'png');
                                 if (saved) {
-                                  console.log("Image saved successfully!!");         
-                                  // that.captureAssets.push(fileName);                        
+                                  console.log('Image saved successfully!!');
+                                  // that.captureAssets.push(fileName);
                                   // for(let asset of that.imageAssets){
                                   //   console.log(asset);
                                   // }
 
                                   that.captureIndex++;
-                                }  
+                                }
                               }, (err) => {
-                                      console.log("Error -> " + err.message);
+                                      console.log('Error -> ' + err.message);
                               });
 
 
                            })
                           .catch((err) => {
-                              console.log("Error -> " + err.message);
+                              console.log('Error -> ' + err.message);
                           });
-                      })
+                      });
       }
   }
 
- 
-    
+
   ngOnDestroy() {
     this.ingredient.unsubscribe();
     this.step.unsubscribe();
