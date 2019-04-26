@@ -1,7 +1,7 @@
 <ActionBar title="Add Recipe"></ActionBar>
-<ScrollView>                       
+<ScrollView #scrollCtrl>                       
         <StackLayout class="form" [formGroup]="form">
-                <GridLayout rows="50,50,50,50,50,*,25,50,*,25,50,25,100,50,25,100,40" columns="*,100,*">
+                <GridLayout rows="50,50,50,50,50,*,25,50,*,25,50,25,100,50,25,100,60,20,40" columns="*,100,*">
                        <DropDown #category
                                 id="category"
                                 backgroundColor="blue"
@@ -32,6 +32,7 @@
                         col="1" 
                         colSpan="2"
                         formControlName="name"
+                        #name
                     ></TextField>
                     <Label 
                         text="Description" 
@@ -124,10 +125,20 @@
 								<Image [src]='captureUri' height="100"></Image>
 							</StackLayout>
                     </StackLayout>
+                    <FlexboxLayout #tags [formGroup]="form.controls['tags']" flexDirection="row" flexWrap="wrap" justifyContent="center" row="16" col="0" colSpan="3" rowSpan="2">
+                        <!-- <Checkbox #vegan text="Vegan" checked="false"></Checkbox>
+                        <Checkbox #vegetarian text="Vegetarian" checked="false"></Checkbox>
+                        <Checkbox #dairyFree text="Dairy-free" checked="false"></Checkbox>
+                        <Checkbox #glutenFree text="Gluten-free" checked="false"></Checkbox>
+                        <Checkbox #paleo text="Paleo" checked="false"></Checkbox> -->
+                        <StackLayout *ngFor="let tag of tags">
+                            <Checkbox text="tag" formControlName="tag" checked="false"></Checkbox>
+                        </StackLayout>                        
+                    </FlexboxLayout>
                     <Button 
                         backgroundColor="gray" 
                         text="Submit" 
-                        row="16"                         
+                        row="19"                         
                         col="1"
                         (tap)="onCreateRecipe()"
                     ></Button>
