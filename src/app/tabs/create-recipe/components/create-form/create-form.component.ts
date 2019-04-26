@@ -21,6 +21,11 @@ import * as camera from "nativescript-camera";
 import { ApiService } from '~/app/services/api.service';
 import { Subscription } from 'rxjs';
 
+import { Store, select} from '@ngrx/store';
+import * as fromRoot from '../../../../reducers';
+import { Actions, ofType } from '@ngrx/effects';
+import { RecipeActions, PostRecipe } from '../../../../actions/recipes.actions';
+
 // import { Image } from "tns-core-modules/ui/image";
 // import { Page } from 'ui/page';
 
@@ -60,7 +65,10 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
   public selectedIndex = 1;
     public items: Array<string>;
 
-    constructor(private apiService: ApiService) {
+    constructor(
+      private apiService: ApiService,
+      private store: Store<fromRoot.State>,
+      private actions$: Actions) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -76,7 +84,7 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
       description: new FormControl(null, {updateOn: 'blur'}),
       ingredients: new FormArray([new FormControl(null)]),
       steps: new FormArray([new FormControl(null)]),
-      photo: new FormArray([])
+      photos: new FormArray([])
     });
   }
 
@@ -114,66 +122,21 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
       steps: this.form.get('steps').value,
       // tag: 'poultry recipe'
       type: this.recipeType,
-      photo: this.mainPhotoUri,
     };
+
     console.log(recipeForm);
-    this.apiService.postRecipe(recipeForm).subscribe(res => console.log(res));
+    this.store.dispatch(new PostRecipe(recipeForm));
   }
 
   onCategoryChange(args: SelectedIndexChangedEventData) {
 
     this.typeDropDown.nativeElement.items = [];
-    this.typeDropDown.nativeElement.selectedIndex = "0";
+    this.typeDropDown.nativeElement.selectedIndex = '0';
     this.category.emit(args.newIndex);
-   
   }
 
   onTypeChange(args: SelectedIndexChangedEventData) {
     this.recipeType = args.newIndex;
-  }
-
-  onSelectMainPhoto() {
-    let that = this;
-
-    let context = imagepicker.create({
-      mode: 'single' // use "multiple" for multiple selection
-    });
-
-    context
-    .authorize()
-    .then(function() {
-        return context.present();
-    })
-    .then(function(selection) {
-        selection.forEach(function(selected) {
-              // process the selected image
-
-            const source = new ImageSource();
-            source.fromAsset(selected)
-            .then((imageSource: ImageSource) => {
-            // const base64image = imageSource.toBase64String("png", 60);
-            // console.log(base64image);
-            // that.base64images.push(base64image);
-            const folderPath: string = knownFolders.documents().path;
-            const fileName = `test${that.imageIndex}.png`;
-            const filePath = path.join(folderPath, fileName);
-            console.log(filePath);
-            that.mainPhotoUri = filePath;
-            const saved: boolean = imageSource.saveToFile(filePath, 'png');
-            if (saved) {
-                console.log('Default image saved successfully!');
-                that.imageIndex++;
-            }
-
-          })
-          .catch(function(e) {
-            console.log(e);
-          });
-        });
-    }).catch(function (e) {
-        // process error
-        console.log(e);
-    });
   }
 
   onSelectImages() {
@@ -226,8 +189,6 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
         // process error
         console.log(e);
     });
-
-    
   }
 
   onCaptureImage() {

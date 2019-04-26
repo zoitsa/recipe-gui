@@ -34,4 +34,24 @@ export class RecipeEffects {
             );
         })
     );
+
+
+
+
+    @Effect()
+    post$: Observable<Action> = this.action$.pipe(
+        ofType(RecipeActions.Types.POST_RECIPE),
+        switchMap((action: RecipeActions.PostRecipe) => {
+            return this.api.postRecipe(action.payload)
+            .pipe(
+                // tslint:disable-next-line:no-shadowed-variable
+                map((recipe) => new RecipeActions.PostRecipeComplete(recipe)),
+                tap(res => (
+                    console.log('recipe post effect'),
+                    console.log(res)
+                    ))
+                // catchError(errorHandler(RecipeActions.PostRecipeError));
+            );
+        })
+    );
 }
