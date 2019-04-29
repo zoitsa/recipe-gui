@@ -68,8 +68,6 @@ export namespace RecipeReducer {
           loading: false,
         });
 
-      case RecipeActions.Types.POST_RECIPE_COMPLETE:
-        return adapter.addOne(action.payload, {...state});
 
       case RecipeActions.Types.TOGGLE_STEP:
       const selectedRecipeId = state.selectedRecipeId;

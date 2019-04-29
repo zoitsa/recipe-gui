@@ -48,7 +48,8 @@ export class RecipeEffects {
                 map((recipe) => new RecipeActions.PostRecipeComplete(recipe)),
                 tap(res => (
                     console.log('recipe post effect'),
-                    console.log(res)
+                    console.log(JSON.stringify(res)),
+                    console.log(JSON.stringify(res.payload.id))
                     ))
                 // catchError(errorHandler(RecipeActions.PostRecipeError));
             );

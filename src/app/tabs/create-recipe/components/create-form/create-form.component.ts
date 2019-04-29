@@ -24,7 +24,9 @@ import { Subscription } from 'rxjs';
 import { Store, select} from '@ngrx/store';
 import * as fromRoot from '../../../../reducers';
 import { Actions, ofType } from '@ngrx/effects';
-import { RecipeActions, PostRecipe } from '../../../../actions/recipes.actions';
+import { RecipeActions } from '../../../../actions/recipes.actions';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 // import { Image } from "tns-core-modules/ui/image";
 // import { Page } from 'ui/page';
@@ -39,6 +41,7 @@ import { RecipeActions, PostRecipe } from '../../../../actions/recipes.actions';
   styleUrls: ['./create-form.component.scss']
 })
 export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  complete$: Observable<any>;
   form: FormGroup;
   @Input() categories;
   @Input() categoryTypes;
@@ -69,6 +72,13 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
       private apiService: ApiService,
       private store: Store<fromRoot.State>,
       private actions$: Actions) {
+      this.complete$ = actions$.ofType(RecipeActions.Types.POST_RECIPE_COMPLETE)
+      .pipe(
+        tap((res) => (
+          console.log('test in component'),
+          console.log(res)
+          ))
+      );
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -84,7 +94,6 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
       description: new FormControl(null, {updateOn: 'blur'}),
       ingredients: new FormArray([new FormControl(null)]),
       steps: new FormArray([new FormControl(null)]),
-      photos: new FormArray([])
     });
   }
 
@@ -122,10 +131,11 @@ export class CreateFormComponent implements OnInit, OnChanges, AfterViewInit, On
       steps: this.form.get('steps').value,
       // tag: 'poultry recipe'
       type: this.recipeType,
+      photo: this.imageUris[0],
     };
 
     console.log(recipeForm);
-    this.store.dispatch(new PostRecipe(recipeForm));
+    this.store.dispatch(new RecipeActions.PostRecipe(recipeForm));
   }
 
   onCategoryChange(args: SelectedIndexChangedEventData) {
